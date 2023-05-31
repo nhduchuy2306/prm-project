@@ -12,4 +12,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="md_black_1000">#000000</color>
     <color name="grey">#7F7F7F</color>
+    <color name="transparent">#80D1D1D1</color>
 </resources>
