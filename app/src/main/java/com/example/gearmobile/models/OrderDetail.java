@@ -9,15 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-    private Integer productId;
-    private String productName;
+public class OrderDetail {
+    private Integer detailId;
     private Double price;
     private Integer quantity;
-    private String insuranceInfo;
-    private String picture;
     private Boolean status;
-    private Brand brand;
-    private Category category;
-    private ProductDescription description;
+    private Order order;
+    private Product product;
 }
