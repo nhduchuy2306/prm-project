@@ -21,4 +21,11 @@
     <string name="hint_email">Email</string>
     <string name="hint_phone">Phone</string>
     <string name="hint_confirm_password">Confirm Password</string>
+
+    <string name="navgation_home">Home</string>
+    <string name="navgation_explore">Explore</string>
+    <string name="navgation_cart">Cart</string>
+    <string name="navgation_profile">Profile</string>
+    <string name="navgation_chat">Chat</string>
+    <string name="navigation_notifications">Notifications</string>
 </resources>
