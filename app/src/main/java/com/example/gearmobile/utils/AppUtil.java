@@ -8,7 +8,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 
 public class AppUtil {
-
     public static boolean isNetworkAvailable(Context context) {
 
         if(context == null) return false;
@@ -18,6 +17,7 @@ public class AppUtil {
         if(connectivityManager == null) return false;
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Android API >= 29
             Network network = connectivityManager.getActiveNetwork();
             if(network == null) return false;
             NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
@@ -26,6 +26,7 @@ public class AppUtil {
                             networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
         }
         else {
+            // Android API < 29
             NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
             return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         }
