@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
-import com.example.gearmobile.adapters.ProductAdapter;
-import com.example.gearmobile.interfaces.ICardItemClick;
+import com.example.gearmobile.adapters.ProducPaginationtAdapter;
+import com.example.gearmobile.interfaces.IProductCardItemClick;
 import com.example.gearmobile.models.Product;
 import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.services.ProductService;
@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class ExploreFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private ProductAdapter productAdapter;
+    private ProducPaginationtAdapter productAdapter;
     private List<Product> mProductList;
 
     private boolean isLoading = false;
@@ -57,16 +57,7 @@ public class ExploreFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         mProductList = new ArrayList<>();
-        productAdapter = new ProductAdapter(new ICardItemClick() {
-            @Override
-            public void onCardClick(Product product) {
-
-            }
-            @Override
-            public void addToCart(Product product) {
-
-            }
-        });
+        productAdapter = new ProducPaginationtAdapter(getContext());
         recyclerView.setAdapter(productAdapter);
 
         setFirstData();
@@ -77,10 +68,12 @@ public class ExploreFragment extends Fragment {
                 currentPage += 1;
                 loadNextPage();
             }
+
             @Override
             public boolean isLoading() {
                 return isLoading;
             }
+
             @Override
             public boolean isLastPage() {
                 return isLastPage;
@@ -107,6 +100,7 @@ public class ExploreFragment extends Fragment {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ProductModel> call, Throwable t) {
                 Log.e("ExploreFragment", "onFailure: " + t.getMessage());
@@ -140,6 +134,7 @@ public class ExploreFragment extends Fragment {
                             }
                         }
                     }
+
                     @Override
                     public void onFailure(Call<ProductModel> call, Throwable t) {
                         Log.e("ExploreFragment", "onFailure: " + t.getMessage());
