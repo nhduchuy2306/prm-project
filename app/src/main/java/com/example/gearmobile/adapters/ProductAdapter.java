@@ -1,11 +1,13 @@
 package com.example.gearmobile.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,36 +20,65 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int TYPE_PRODUCT = 1;
+    private static final int TYPE_LOADING = 2;
     private List<Product> mProductList;
-    private ICardItemClick mICardItemClick;
+    private final ICardItemClick mICardItemClick;
+    private boolean isLoadingAdded = false;
 
-    public ProductAdapter(List<Product> productList, ICardItemClick iCardItemClick) {
-        mProductList = productList;
+    public ProductAdapter(ICardItemClick iCardItemClick) {
         mICardItemClick = iCardItemClick;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setProductList(List<Product> productList) {
+        mProductList = productList;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mProductList != null && position == mProductList.size() - 1 && isLoadingAdded)
+            return TYPE_LOADING;
+        return TYPE_PRODUCT;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View productView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
-        return new ProductViewHolder(productView);
+        if (TYPE_LOADING == viewType) {
+            View loadingView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+            return new ProductViewHolder(loadingView);
+        } else {
+            View productView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
+            return new ProductViewHolder(productView);
+        }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = mProductList.get(position);
-        if (product == null)
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder.getItemViewType() == TYPE_LOADING)
             return;
+        if (holder instanceof ProductViewHolder) {
+            ProductViewHolder productViewHolder = (ProductViewHolder) holder;
+            Product product = mProductList.get(position);
+            if (product == null)
+                return;
 
-        String formattedNumber = String.valueOf(product.getPrice()).replaceAll("\\.0+$", "");
+            String formattedNumber = String.valueOf(product.getPrice()).replaceAll("\\.0+$", "");
 
-        Picasso.get().load(product.getPicture()).placeholder(R.drawable.ic_launcher_background).into(holder.productImage);
-        holder.productName.setText(product.getProductName());
-        holder.productPrice.setText("$"+formattedNumber);
-        holder.productLayout.setOnClickListener(v -> mICardItemClick.onCardClick(product));
-        holder.productAddToCart.setOnClickListener(v -> mICardItemClick.addToCart(product));
+            Picasso.get().load(product.getPicture()).placeholder(R.drawable.ic_launcher_background).into(productViewHolder.productImage);
+            productViewHolder.productName.setText(product.getProductName());
+            productViewHolder.productPrice.setText("$"+formattedNumber);
+            productViewHolder.productLayout.setOnClickListener(v -> mICardItemClick.onCardClick(product));
+            productViewHolder.productAddToCart.setOnClickListener(v -> mICardItemClick.addToCart(product));
+        } else if (holder instanceof LoadingViewHolder) {
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+            loadingViewHolder.progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -57,7 +88,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return 0;
     }
 
-    public class ProductViewHolder extends RecyclerView.ViewHolder {
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout productLayout;
         public ImageView productImage;
         public TextView productName;
@@ -70,6 +101,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productName = itemView.findViewById(R.id.product_item_name);
             productPrice = itemView.findViewById(R.id.product_item_price);
             productAddToCart = itemView.findViewById(R.id.product_item_add_to_cart);
+        }
+    }
+
+    public static class LoadingViewHolder extends RecyclerView.ViewHolder {
+        private final ProgressBar progressBar;
+        public LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
+            progressBar = itemView.findViewById(R.id.loading_progress_bar);
+        }
+    }
+
+    public void addLoadingFooter() {
+        isLoadingAdded = true;
+        mProductList.add(new Product());
+        notifyItemInserted(mProductList.size() - 1);
+    }
+
+    public void removeLoadingFooter() {
+        isLoadingAdded = false;
+        int position = mProductList.size() - 1;
+        Product product = mProductList.get(position);
+        if (product != null) {
+            mProductList.remove(position);
+            notifyItemRemoved(position);
         }
     }
 }

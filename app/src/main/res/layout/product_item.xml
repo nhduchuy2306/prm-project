@@ -15,7 +15,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="130dp"
             android:id="@+id/product_item_image"
             android:src="@drawable/ic_launcher_background"
             android:layout_margin="5dp"
@@ -44,7 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/product_item_add_to_cart"
-            android:text="Add to Cart"
+            android:text="@string/add_to_cart"
+            android:backgroundTint="@android:color/holo_blue_dark"
             android:textSize="12sp"
             android:textStyle="bold"
             android:layout_margin="5dp"
