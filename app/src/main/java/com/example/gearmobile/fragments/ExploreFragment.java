@@ -67,6 +67,7 @@ public class ExploreFragment extends Fragment {
                             @Override
                             public void onCardClick(Product product) {
                                 Log.d("ExploreFragment", "onCardClick: " + product);
+
                             }
 
                             @Override
