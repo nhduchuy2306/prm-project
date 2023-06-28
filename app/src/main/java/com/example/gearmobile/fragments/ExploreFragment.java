@@ -1,5 +1,6 @@
 package com.example.gearmobile.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -56,6 +57,18 @@ public class ExploreFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         mProductList = new ArrayList<>();
+        productAdapter = new ProductAdapter(new ICardItemClick() {
+            @Override
+            public void onCardClick(Product product) {
+
+            }
+            @Override
+            public void addToCart(Product product) {
+
+            }
+        });
+        recyclerView.setAdapter(productAdapter);
+
         setFirstData();
         recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
             @Override
@@ -64,18 +77,15 @@ public class ExploreFragment extends Fragment {
                 currentPage += 1;
                 loadNextPage();
             }
-
             @Override
             public boolean isLoading() {
                 return isLoading;
             }
-
             @Override
             public boolean isLastPage() {
                 return isLastPage;
             }
         });
-
         return view;
     }
 
@@ -88,24 +98,12 @@ public class ExploreFragment extends Fragment {
                     if (productModel != null) {
                         mProductList = productModel.getData();
                         totalPage = productModel.getSize();
-                        productAdapter = new ProductAdapter(new ICardItemClick() {
-                            @Override
-                            public void onCardClick(Product product) {
-                                Log.d("ExploreFragment", "onCardClick: " + product);
-                            }
-
-                            @Override
-                            public void addToCart(Product product) {
-                                Log.d("ExploreFragment", "addToCart: " + product);
-                            }
-                        });
                         productAdapter.setProductList(mProductList);
                         if (currentPage < totalPage) {
                             productAdapter.addLoadingFooter();
                         } else {
                             isLastPage = true;
                         }
-                        recyclerView.setAdapter(productAdapter);
                     }
                 }
             }
@@ -122,18 +120,17 @@ public class ExploreFragment extends Fragment {
             public void run() {
                 productAdapter.removeLoadingFooter();
                 ProductService.productService.getProducts(currentPage, 8).enqueue(new Callback<ProductModel>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                         if (response.isSuccessful()) {
                             ProductModel productModel = response.body();
                             if (productModel != null) {
-                                mProductList = productModel.getData();
-                                totalPage = productModel.getSize();
+                                mProductList.addAll(productModel.getData());
                                 productAdapter.removeLoadingFooter();
                                 isLoading = false;
                                 productAdapter.setProductList(mProductList);
                                 productAdapter.notifyDataSetChanged();
-
                                 isLoading = false;
                                 if (currentPage < totalPage) {
                                     productAdapter.addLoadingFooter();
@@ -141,10 +138,8 @@ public class ExploreFragment extends Fragment {
                                     isLastPage = true;
                                 }
                             }
-                            recyclerView.setAdapter(productAdapter);
                         }
                     }
-
                     @Override
                     public void onFailure(Call<ProductModel> call, Throwable t) {
                         Log.e("ExploreFragment", "onFailure: " + t.getMessage());
