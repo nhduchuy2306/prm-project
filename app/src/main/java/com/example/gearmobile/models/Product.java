@@ -1,6 +1,5 @@
 package com.example.gearmobile.models;
 
-
 public class Product {
     private Integer productId;
     private String productName;
@@ -9,11 +8,15 @@ public class Product {
     private String insuranceInfo;
     private String picture;
     private Boolean status;
-    private Brand brand;
-    private Category category;
-    private ProductDescription description;
+    private int brandId;
+    private int categoryId;
 
-    public Product(Integer productId, String productName, Double price, Integer quantity, String insuranceInfo, String picture, Boolean status, Brand brand, Category category, ProductDescription description) {
+    public Product() {
+    }
+
+    public Product(Integer productId, String productName, Double price, Integer quantity,
+                   String insuranceInfo, String picture, Boolean status, int brandId,
+                   int categoryId) {
         this.productId = productId;
         this.productName = productName;
         this.price = price;
@@ -21,12 +24,8 @@ public class Product {
         this.insuranceInfo = insuranceInfo;
         this.picture = picture;
         this.status = status;
-        this.brand = brand;
-        this.category = category;
-        this.description = description;
-    }
-
-    public Product() {
+        this.brandId = brandId;
+        this.categoryId = categoryId;
     }
 
     public Integer getProductId() {
@@ -85,27 +84,34 @@ public class Product {
         this.status = status;
     }
 
-    public Brand getBrand() {
-        return brand;
+    public int getBrandId() {
+        return brandId;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
     }
 
-    public Category getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public ProductDescription getDescription() {
-        return description;
-    }
-
-    public void setDescription(ProductDescription description) {
-        this.description = description;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", insuranceInfo='" + insuranceInfo + '\'' +
+                ", picture='" + picture + '\'' +
+                ", status=" + status +
+                ", brandId=" + brandId +
+                ", categoryId=" + categoryId +
+                '}';
     }
 }
