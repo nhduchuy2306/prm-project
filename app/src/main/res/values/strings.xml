@@ -28,4 +28,6 @@
     <string name="navgation_profile">Profile</string>
     <string name="navgation_chat">Chat</string>
     <string name="navigation_notifications">Notifications</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="find_your_product">Find your product...</string>
 </resources>

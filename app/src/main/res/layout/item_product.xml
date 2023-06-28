@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="20sp">
+    <LinearLayout
+        android:id="@+id/product_item_layout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="130dp"
+            android:id="@+id/product_item_image"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_margin="5dp"
+            android:padding="7dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_item_name"
+            android:text="Product Name"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_item_price"
+            android:text="Product Price"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_item_add_to_cart"
+            android:text="@string/add_to_cart"
+            android:backgroundTint="@android:color/holo_blue_dark"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            app:cornerRadius="20dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
