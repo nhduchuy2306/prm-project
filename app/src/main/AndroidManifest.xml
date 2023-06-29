@@ -29,6 +29,15 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false" />
+        <activity
+            android:name=".DetailProductActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+
     </application>
 
 </manifest>

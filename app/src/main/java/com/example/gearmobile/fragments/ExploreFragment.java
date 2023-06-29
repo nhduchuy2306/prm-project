@@ -1,6 +1,7 @@
 package com.example.gearmobile.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gearmobile.DetailProductActivity;
 import com.example.gearmobile.R;
 import com.example.gearmobile.adapters.ProductAdapter;
 import com.example.gearmobile.interfaces.ICardItemClick;
@@ -22,6 +24,7 @@ import com.example.gearmobile.models.Product;
 import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.services.ProductService;
 import com.example.gearmobile.utils.PaginationScrollListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +64,11 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onCardClick(Product product) {
 
+                Intent intent = new Intent(getActivity(), DetailProductActivity.class);
+                Gson gson = new Gson();
+                String productJson = gson.toJson(product);
+                intent.putExtra("product", productJson);
+                startActivity(intent);
             }
             @Override
             public void addToCart(Product product) {

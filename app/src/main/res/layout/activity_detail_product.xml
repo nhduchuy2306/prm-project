@@ -13,6 +13,7 @@
         android:title="Product Detail"
         android:titleTextColor="#ffffff" />
 
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
