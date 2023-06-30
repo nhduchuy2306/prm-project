@@ -20,6 +20,7 @@ import com.example.gearmobile.adapters.ImagePagerAdapter;
 import com.example.gearmobile.adapters.ProductDescriptionAdapter;
 import com.example.gearmobile.models.Product;
 import com.example.gearmobile.models.ProductDescription;
+import com.example.gearmobile.services.ProductDescriptionService;
 import com.example.gearmobile.services.ProductService;
 import com.google.gson.Gson;
 
@@ -81,7 +82,7 @@ public class DetailProductActivity extends AppCompatActivity {
     }
 
     public ProductDescription getProductDescription(){
-        Call<ProductDescription> call = ProductService.productService.getProductDescription(product.getProductId());
+        Call<ProductDescription> call = ProductDescriptionService.productDescriptionService.getProductDescription(product.getProductId());
         call.enqueue(new Callback<ProductDescription>() {
             @Override
             public void onResponse(Call<ProductDescription> call, Response<ProductDescription> response) {
