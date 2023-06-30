@@ -57,17 +57,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     User user = response.body();
-                    //boolean loginResult = loginResponse.isSuccess();
-                    // Xử lý kết quả đăng nhập
-                    if (user!=null) {
+
                         // Đăng nhập thành công, chuyển sang Activity mới
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish(); // Tùy chọn: Đóng Activity hiện tại sau khi chuyển sang Activity mới
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Sai username hoặc password", Toast.LENGTH_SHORT).show();                    }
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "Không tồn tại username", Toast.LENGTH_SHORT).show();                }
+                    Toast.makeText(getApplicationContext(), "Sai username hoặc password", Toast.LENGTH_SHORT).show();                }
             }
 
             @Override
