@@ -21,7 +21,6 @@
         android:layout_below="@id/toolbar"
         android:background="#000000"
         android:contentDescription="ViewPager"/>
-
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -32,220 +31,105 @@
         android:text="Product Title"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="#000000" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/titleTextView"
+        android:id="@+id/modifyAmount">
+
+        <Button
+            android:id="@+id/decreaseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/quantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="16dp"/>
+
+        <Button
+            android:id="@+id/increaseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+    </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/modifyAmount">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Tiêu đề -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Information"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Value"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <!-- Dòng 1 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Keycap" />
+
+
+                    <TextView
+                        android:id="@+id/pdKeycap"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Keycap"
+                        />
+                </TableRow>
+
+                <!-- Dòng 2 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tiêu đề 2" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nội dung 2" />
+                </TableRow>
+
+                <!-- Thêm các dòng khác tại đây -->
+
+            </TableLayout>
+        </ScrollView>
+
+
 
     <!--Thêm các trường thông tin khác của sản phẩm-->
-    <TextView
-        android:id="@+id/pdKeycap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleTextView"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Keycap"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-
-    <TextView
-        android:id="@+id/pdSwitchKeyBoard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdKeycap"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Switch Keyboard"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdTypeKeyBoard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdSwitchKeyBoard"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product TypeKeyBoard"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdTypeKeyBoard"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Connect"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdLed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdConnect"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Led"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdFreigh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdLed"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Freigh"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-
-    <TextView
-        android:id="@+id/pdItemDimension"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdFreigh"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Item Dimension"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdCpu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdItemDimension"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product CPU"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdRam"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdCpu"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product RAM"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdOperatingSystem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdRam"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Operating System"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdBattery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdOperatingSystem"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Battery"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdHardDisk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdBattery"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Hard Disk"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdGraphicCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdHardDisk"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Graphic Card"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdKeyBoard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdGraphicCard"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Keyboard"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdAudio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdKeyBoard"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Audio"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdWifi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdAudio"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Wifi"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdBluetooth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdWifi"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Bluetooth"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdBluetooth"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Color"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdFrameRate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdColor"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product FrameRate"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdScreenSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdFrameRate"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product ScreenSize"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
-    <TextView
-        android:id="@+id/pdScreenType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pdScreenSize"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Product ScreenType"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#000000" />
 
 
 
