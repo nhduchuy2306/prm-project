@@ -1,7 +1,6 @@
 package com.example.gearmobile.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,15 +15,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gearmobile.DetailProductActivity;
 import com.example.gearmobile.R;
-import com.example.gearmobile.adapters.ProductAdapter;
-import com.example.gearmobile.interfaces.ICardItemClick;
+import com.example.gearmobile.adapters.ProducPaginationtAdapter;
+import com.example.gearmobile.adapters.ProductDescriptionAdapter;
+import com.example.gearmobile.interfaces.IProductCardItemClick;
 import com.example.gearmobile.models.Product;
+import com.example.gearmobile.models.ProductDescription;
 import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.services.ProductService;
 import com.example.gearmobile.utils.PaginationScrollListener;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,9 @@ import retrofit2.Response;
 public class ExploreFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private ProductAdapter productAdapter;
+    private ProducPaginationtAdapter productAdapter;
+    private ProductDescriptionAdapter productDescriptionAdapter;
+    private ProductDescription productDescription;
     private List<Product> mProductList;
 
     private boolean isLoading = false;
@@ -60,21 +61,8 @@ public class ExploreFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         mProductList = new ArrayList<>();
-        productAdapter = new ProductAdapter(new ICardItemClick() {
-            @Override
-            public void onCardClick(Product product) {
-
-                Intent intent = new Intent(getActivity(), DetailProductActivity.class);
-                Gson gson = new Gson();
-                String productJson = gson.toJson(product);
-                intent.putExtra("product", productJson);
-                startActivity(intent);
-            }
-            @Override
-            public void addToCart(Product product) {
-
-            }
-        });
+        productAdapter = new ProducPaginationtAdapter(getContext());
+        productDescriptionAdapter=new ProductDescriptionAdapter(getContext(),productDescription);
         recyclerView.setAdapter(productAdapter);
 
         setFirstData();
@@ -85,10 +73,12 @@ public class ExploreFragment extends Fragment {
                 currentPage += 1;
                 loadNextPage();
             }
+
             @Override
             public boolean isLoading() {
                 return isLoading;
             }
+
             @Override
             public boolean isLastPage() {
                 return isLastPage;
@@ -115,6 +105,7 @@ public class ExploreFragment extends Fragment {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ProductModel> call, Throwable t) {
                 Log.e("ExploreFragment", "onFailure: " + t.getMessage());
@@ -148,6 +139,7 @@ public class ExploreFragment extends Fragment {
                             }
                         }
                     }
+
                     @Override
                     public void onFailure(Call<ProductModel> call, Throwable t) {
                         Log.e("ExploreFragment", "onFailure: " + t.getMessage());

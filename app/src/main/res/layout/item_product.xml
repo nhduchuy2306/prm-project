@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="130dp"
             android:id="@+id/product_item_image"
             android:src="@drawable/ic_launcher_background"

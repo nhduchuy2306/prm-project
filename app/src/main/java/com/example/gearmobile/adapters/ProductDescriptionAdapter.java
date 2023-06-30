@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,9 @@ public class ProductDescriptionAdapter extends BaseAdapter {
             //convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_detail_product, parent, false);
             convertView = inflater.inflate(R.layout.activity_detail_product, parent, false);
         }
+        TableRow row = new TableRow(context);
 
+        // Tạo và cấu hình các trường dữ liệu
         TextView productNameTextView = convertView.findViewById(R.id.titleTextView);
         TextView keyCapTextView = convertView.findViewById(R.id.pdKeycap);
         TextView switchKeyBoardTextView = convertView.findViewById(R.id.pdSwitchKeyBoard);
@@ -76,27 +79,51 @@ public class ProductDescriptionAdapter extends BaseAdapter {
 
         // Các TextView khác tương tự
         productNameTextView.setText(productDescription.getProduct().getProductName());
-        keyCapTextView.setText("Keycap:"+productDescription.getKeycap());
-        switchKeyBoardTextView.setText("SwitchKeyBoard"+productDescription.getSwitchKeyBoard());
-        typeKeyBoardTextView.setText("TypeKeyBoard"+productDescription.getTypeKeyboard());
-        connectTextView.setText("SwitchKeyBoard"+productDescription.getConnect());
-        ledTextView.setText("SwitchKeyBoard"+productDescription.getLed());
-        freighTextView.setText("SwitchKeyBoard"+productDescription.getFreigh());
-        ItemDimensionTextView.setText("SwitchKeyBoard"+productDescription.getItemDimension());
-        cpuTextView.setText("SwitchKeyBoard"+productDescription.getCpu());
-        ramTextView.setText("SwitchKeyBoard"+productDescription.getRam());
-        operatingSystemTextView.setText("SwitchKeyBoard"+productDescription.getOperatingSystem());
-        batteryTextView.setText("SwitchKeyBoard"+productDescription.getBattery());
-        hardDiskTextView.setText("SwitchKeyBoard"+productDescription.getHardDisk());
-        graphicCardTextView.setText("SwitchKeyBoard"+productDescription.getGraphicCard());
-        keyBoardTextView.setText("SwitchKeyBoard"+productDescription.getKeyBoard());
-        audioTextView.setText("SwitchKeyBoard"+productDescription.getAudio());
-        wifiTextView.setText("SwitchKeyBoard"+productDescription.getWifi());
-        bluetoothTextView.setText("SwitchKeyBoard"+productDescription.getBluetooth());
-        colorTextView.setText("SwitchKeyBoard"+productDescription.getColor());
-        frameRateTextView.setText("SwitchKeyBoard"+productDescription.getFrameRate());
-        screenSizeTextView.setText("SwitchKeyBoard"+productDescription.getScreenSize());
-        screenTypeTextView.setText("SwitchKeyBoard"+productDescription.getScreenType());
+        keyCapTextView.setText(productDescription.getKeycap());
+        switchKeyBoardTextView.setText(productDescription.getSwitchKeyBoard());
+        typeKeyBoardTextView.setText(productDescription.getTypeKeyboard());
+        connectTextView.setText(productDescription.getConnect());
+        ledTextView.setText(productDescription.getLed());
+        freighTextView.setText(productDescription.getFreigh());
+        ItemDimensionTextView.setText(productDescription.getItemDimension());
+        cpuTextView.setText(productDescription.getCpu());
+        ramTextView.setText(productDescription.getRam());
+        operatingSystemTextView.setText(productDescription.getOperatingSystem());
+        batteryTextView.setText(productDescription.getBattery());
+        hardDiskTextView.setText(productDescription.getHardDisk());
+        graphicCardTextView.setText(productDescription.getGraphicCard());
+        keyBoardTextView.setText(productDescription.getKeyBoard());
+        audioTextView.setText(productDescription.getAudio());
+        wifiTextView.setText(productDescription.getWifi());
+        bluetoothTextView.setText(productDescription.getBluetooth());
+        colorTextView.setText(productDescription.getColor());
+        frameRateTextView.setText(productDescription.getFrameRate());
+        screenSizeTextView.setText(productDescription.getScreenSize());
+        screenTypeTextView.setText(productDescription.getScreenType());
+
+        //addView cho từng row
+        row.addView(productNameTextView);
+        row.addView(keyCapTextView);
+        row.addView(switchKeyBoardTextView);
+        row.addView(typeKeyBoardTextView);
+        row.addView(connectTextView);
+        row.addView(ledTextView);
+        row.addView(freighTextView);
+        row.addView(ItemDimensionTextView);
+        row.addView(cpuTextView);
+        row.addView(ramTextView);
+        row.addView(operatingSystemTextView);
+        row.addView(batteryTextView);
+        row.addView(hardDiskTextView);
+        row.addView(graphicCardTextView);
+        row.addView(keyBoardTextView);
+        row.addView(audioTextView);
+        row.addView(wifiTextView);
+        row.addView(bluetoothTextView);
+        row.addView(colorTextView);
+        row.addView(frameRateTextView);
+        row.addView(screenSizeTextView);
+        row.addView(screenTypeTextView);
 
 
         // Thiết lập các TextView khác tương tự

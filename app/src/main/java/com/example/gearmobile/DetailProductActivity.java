@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +36,10 @@ public class DetailProductActivity extends AppCompatActivity {
     private ProductDescription productDescription;
     private ProductDescriptionAdapter productDescriptionAdapter;
     private Product product;
-   // private List<TextView> descriptionTextViews = new ArrayList<>();
+    private Button increaseButton;
+    private Button decreaseButton;
+    private TextView quantityTextView;
+    private TableLayout tableLayout;
     List<Integer> imageList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +56,8 @@ public class DetailProductActivity extends AppCompatActivity {
         ImagePagerAdapter adapter = new ImagePagerAdapter(this, imageList);
         viewPager.setAdapter(adapter);
 
-        productDescriptionAdapter= new ProductDescriptionAdapter(context,productDescription);
+        tableLayout=findViewById(R.id.tableLayoutDes);
+        productDescriptionAdapter= new ProductDescriptionAdapter(context,getProductDescription());
 
         //Lấy product từ explore qua
         Intent intent = getIntent();
@@ -58,7 +65,8 @@ public class DetailProductActivity extends AppCompatActivity {
         String productJson = intent.getStringExtra("product");
         product = gson.fromJson(productJson, Product.class);
 
-        getProductDescription();
+        //getProductDescription();
+        ModifyAmount();
 
     }
 
@@ -94,6 +102,40 @@ public class DetailProductActivity extends AppCompatActivity {
             }
         });
         return productDescription;
+    }
+
+    public void ModifyAmount(){
+        increaseButton = findViewById(R.id.increaseButton);
+        decreaseButton = findViewById(R.id.decreaseButton);
+        quantityTextView = findViewById(R.id.quantityTextView);
+
+        // Đặt sự kiện click cho nút tăng
+        increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lấy số lượng hiện tại
+                int currentQuantity = Integer.parseInt(quantityTextView.getText().toString());
+                // Tăng số lượng lên 1
+                currentQuantity++;
+                // Cập nhật số lượng mới
+                quantityTextView.setText(String.valueOf(currentQuantity));
+            }
+        });
+
+        // Đặt sự kiện click cho nút giảm
+        decreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lấy số lượng hiện tại
+                int currentQuantity = Integer.parseInt(quantityTextView.getText().toString());
+                // Giảm số lượng xuống 1, nhưng không âm
+                if (currentQuantity > 0) {
+                    currentQuantity--;
+                }
+                // Cập nhật số lượng mới
+                quantityTextView.setText(String.valueOf(currentQuantity));
+            }
+        });
     }
 
 }

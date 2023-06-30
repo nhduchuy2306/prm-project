@@ -66,11 +66,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/modifyAmount">
+            android:layout_below="@+id/modifyAmount"
+            android:id="@+id/scrollViewDes">
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/tableLayoutDes" >
 
                 <!-- Tiêu đề -->
                 <TableRow>
@@ -104,6 +106,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Product Keycap"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000"
                         />
                 </TableRow>
 
@@ -113,16 +117,341 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tiêu đề 2" />
+                        android:text="SwitchKeyBoard" />
 
+                    <TextView
+                        android:id="@+id/pdSwitchKeyBoard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Switch Keyboard"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 3 -->
+                <TableRow>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Nội dung 2" />
+                        android:text="TypeKeyBoard" />
+
+                    <TextView
+                        android:id="@+id/pdTypeKeyBoard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product TypeKeyBoard"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 4 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Connect" />
+
+                    <TextView
+                        android:id="@+id/pdConnect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Connect"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 5 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Led" />
+
+                    <TextView
+                        android:id="@+id/pdLed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Led"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 6 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Freigh" />
+
+                    <TextView
+                        android:id="@+id/pdFreigh"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Freigh"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 7 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ItemDimension" />
+
+                    <TextView
+                        android:id="@+id/pdItemDimension"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Item Dimension"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 8 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="CPU" />
+
+                    <TextView
+                        android:id="@+id/pdCpu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product CPU"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 9 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="RAM" />
+
+                    <TextView
+                        android:id="@+id/pdRam"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product RAM"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 10 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Operating System" />
+
+                    <TextView
+                        android:id="@+id/pdOperatingSystem"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Operating System"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 11 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Battery" />
+
+                    <TextView
+                        android:id="@+id/pdBattery"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Battery"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 12 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="HardDisk" />
+
+                    <TextView
+                        android:id="@+id/pdHardDisk"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Hard Disk"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 13 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="GraphicCard" />
+
+                    <TextView
+                        android:id="@+id/pdGraphicCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Graphic Card"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 14 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="KeyBoard" />
+
+                    <TextView
+                        android:id="@+id/pdKeyBoard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Keyboard"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 15 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Audio" />
+
+                    <TextView
+                        android:id="@+id/pdAudio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Audio"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 16 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Wifi" />
+
+                    <TextView
+                        android:id="@+id/pdWifi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Wifi"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 17 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bluetooth" />
+
+                    <TextView
+                        android:id="@+id/pdBluetooth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Bluetooth"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 18 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Color" />
+
+                    <TextView
+                        android:id="@+id/pdColor"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product Color"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 19 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="FrameRate" />
+
+                    <TextView
+                        android:id="@+id/pdFrameRate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product FrameRate"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 20 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ScreenSize" />
+
+                    <TextView
+                        android:id="@+id/pdScreenSize"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product ScreenSize"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
+                </TableRow>
+                <!-- Dòng 21 -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ScreenType" />
+
+                    <TextView
+                        android:id="@+id/pdScreenType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Product ScreenType"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#000000" />
                 </TableRow>
 
-                <!-- Thêm các dòng khác tại đây -->
 
             </TableLayout>
         </ScrollView>

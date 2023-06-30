@@ -1,5 +1,6 @@
 package com.example.gearmobile.services;
 
+import com.example.gearmobile.models.Product;
 import com.example.gearmobile.models.ProductDescription;
 import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.models.ProductPicture;
@@ -16,7 +17,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ProductService {
-
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
             .create();
@@ -31,6 +31,11 @@ public interface ProductService {
 
     @GET("products")
     Call<ProductModel> getProducts(@Query("page") int page, @Query("limit") int limit);
+    @GET("products/latest")
+    Call<List<Product>> getLatestProducts();
+    @GET("products/best-selling")
+    Call<List<Product>> getBestSellingProducts();
+
     @GET("products/{productid}/pictures")
     Call<List<ProductPicture>> getProductPictures(@Path("productid") int productId);
 
