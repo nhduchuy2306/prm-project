@@ -10,21 +10,25 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public interface LoginService {
+public interface UserService {
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
             .create();
 
     String BASE_URL = "https://my-happygear.azurewebsites.net/happygear/api/";
 
-    LoginService loginService = new Retrofit.Builder()
+    UserService userService = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-            .create(LoginService.class);
+            .create(UserService.class);
 
     @POST("users/login")
     Call<User> login(@Body LoginRequest loginRequest);
+    @GET("users")
+    Call<User> getUserByUsername(@Field("username") String username);
+
 }

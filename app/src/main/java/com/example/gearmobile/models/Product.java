@@ -1,6 +1,8 @@
 package com.example.gearmobile.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private Integer productId;
     private String productName;
     private Double price;

@@ -16,9 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gearmobile.DetailProductActivity;
 import com.example.gearmobile.R;
-import com.example.gearmobile.interfaces.IProductCardItemClick;
 import com.example.gearmobile.models.Product;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -81,13 +79,6 @@ public class ProducPaginationtAdapter extends RecyclerView.Adapter<RecyclerView.
             productViewHolder.productLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Product", "onClick: " + product.getProductName());
-                    mContext = v.getContext();
-                    Gson gson = new Gson();
-                    String productJson = gson.toJson(product);
-                    Intent intent = new Intent(mContext, DetailProductActivity.class);
-                    intent.putExtra("product", productJson);
-                    mContext.startActivity(intent);
                 }
             });
             productViewHolder.productAddToCart.setOnClickListener(new View.OnClickListener() {

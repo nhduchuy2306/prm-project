@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.gearmobile.MainActivity;
 import com.example.gearmobile.R;
+import com.example.gearmobile.fragments.HomeFragment;
 import com.example.gearmobile.utils.AppUtil;
 
 public class SplashActivity extends AppCompatActivity {
@@ -31,8 +32,8 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     // Go to main activity
-                    //Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this, HomeFragment.class);
                     startActivity(intent);
                     finish();
                 }

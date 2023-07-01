@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
-import com.example.gearmobile.interfaces.ICategoryClick;
 import com.example.gearmobile.models.Category;
 import com.squareup.picasso.Picasso;
 

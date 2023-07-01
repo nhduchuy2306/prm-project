@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
 import com.example.gearmobile.adapters.ProducPaginationtAdapter;
-import com.example.gearmobile.adapters.ProductDescriptionAdapter;
-import com.example.gearmobile.interfaces.IProductCardItemClick;
 import com.example.gearmobile.models.Product;
-import com.example.gearmobile.models.ProductDescription;
 import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.services.ProductService;
 import com.example.gearmobile.utils.PaginationScrollListener;
@@ -38,8 +33,6 @@ public class ExploreFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProducPaginationtAdapter productAdapter;
-    private ProductDescriptionAdapter productDescriptionAdapter;
-    private ProductDescription productDescription;
     private List<Product> mProductList;
 
 
@@ -65,7 +58,6 @@ public class ExploreFragment extends Fragment {
 
         mProductList = new ArrayList<>();
         productAdapter = new ProducPaginationtAdapter(getContext());
-        productDescriptionAdapter=new ProductDescriptionAdapter(getContext(),productDescription);
 
         recyclerView.setAdapter(productAdapter);
 
