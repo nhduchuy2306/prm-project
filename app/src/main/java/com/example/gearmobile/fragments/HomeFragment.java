@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
         ProductService.productService.getBestSellingProducts().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     List<Product> bestSellingProducts = response.body();
                     if (bestSellingProducts != null) {
                         mBestSellingProducts = bestSellingProducts;
@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment {
         CategoryService.categoryService.getCategories().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     List<Category> categories = response.body();
                     if (categories != null) {
                         mCategories = categories;
