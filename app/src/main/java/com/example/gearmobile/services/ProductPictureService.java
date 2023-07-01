@@ -24,6 +24,6 @@ public interface ProductPictureService {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ProductPictureService.class);
-    @GET("products/{productid}/pictures")
-    Call<List<ProductPicture>> getProductPictures(@Path("productid") int productId);
+    @GET("products/{productId}/pictures")
+    Call<List<ProductPicture>> getProductPictures(@Path("productId") int productId);
 }

@@ -5,16 +5,14 @@ public class ProductPicture {
     private Integer pictureId;
     private String pictureUrl;
     private Boolean status;
-    private Product product;
 
     public ProductPicture() {
     }
 
-    public ProductPicture(Integer pictureId, String pictureUrl, Boolean status, Product product) {
+    public ProductPicture(Integer pictureId, String pictureUrl, Boolean status) {
         this.pictureId = pictureId;
         this.pictureUrl = pictureUrl;
         this.status = status;
-        this.product = product;
     }
 
     public Integer getPictureId() {
@@ -39,13 +37,5 @@ public class ProductPicture {
 
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 }
