@@ -3,6 +3,7 @@ package com.example.gearmobile.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext = v.getContext();
-                Intent intent = new Intent(mContext, DetailProductActivity.class);
+                /*mContext = v.getContext();
                 Gson gson = new Gson();
                 String productJson = gson.toJson(product);
+                Intent intent = new Intent(mContext, DetailProductActivity.class);
                 intent.putExtra("product", productJson);
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
             }
         });
         holder.productAddToCart.setOnClickListener(new View.OnClickListener() {

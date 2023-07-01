@@ -58,7 +58,7 @@ public class DetailProductActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         tableLayout=findViewById(R.id.tableLayoutDes);
-        productDescriptionAdapter= new ProductDescriptionAdapter(context,getProductDescription());
+
 
         //Lấy product từ explore qua
         Intent intent = getIntent();
@@ -68,6 +68,7 @@ public class DetailProductActivity extends AppCompatActivity {
 
         //getProductDescription();
         ModifyAmount();
+        productDescriptionAdapter= new ProductDescriptionAdapter(context,getProductDescription());
 
     }
 

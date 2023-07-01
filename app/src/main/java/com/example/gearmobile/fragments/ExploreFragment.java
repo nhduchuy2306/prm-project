@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +42,7 @@ public class ExploreFragment extends Fragment {
     private ProductDescription productDescription;
     private List<Product> mProductList;
 
+
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int currentPage = 1;
@@ -63,6 +66,7 @@ public class ExploreFragment extends Fragment {
         mProductList = new ArrayList<>();
         productAdapter = new ProducPaginationtAdapter(getContext());
         productDescriptionAdapter=new ProductDescriptionAdapter(getContext(),productDescription);
+
         recyclerView.setAdapter(productAdapter);
 
         setFirstData();
