@@ -2,6 +2,7 @@ package com.example.gearmobile.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
-import com.example.gearmobile.interfaces.IProductCardItemClick;
 import com.example.gearmobile.models.Product;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -78,7 +79,6 @@ public class ProducPaginationtAdapter extends RecyclerView.Adapter<RecyclerView.
             productViewHolder.productLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Product", "onClick: " + product.getProductName());
                 }
             });
             productViewHolder.productAddToCart.setOnClickListener(new View.OnClickListener() {

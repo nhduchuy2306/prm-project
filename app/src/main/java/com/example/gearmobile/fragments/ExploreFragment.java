@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
 import com.example.gearmobile.adapters.ProducPaginationtAdapter;
-import com.example.gearmobile.interfaces.IProductCardItemClick;
 import com.example.gearmobile.models.Product;
 import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.services.ProductService;
@@ -35,6 +34,7 @@ public class ExploreFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProducPaginationtAdapter productAdapter;
     private List<Product> mProductList;
+
 
     private boolean isLoading = false;
     private boolean isLastPage = false;
@@ -58,6 +58,7 @@ public class ExploreFragment extends Fragment {
 
         mProductList = new ArrayList<>();
         productAdapter = new ProducPaginationtAdapter(getContext());
+
         recyclerView.setAdapter(productAdapter);
 
         setFirstData();

@@ -1,7 +1,9 @@
 package com.example.gearmobile.models;
 
 
-public class ProductDescription {
+import java.io.Serializable;
+
+public class ProductDescription implements Serializable {
     private Integer productId;
     private String keycap;
     private String switchKeyBoard;

@@ -18,7 +18,6 @@ import com.example.gearmobile.adapters.CategoryAdapter;
 import com.example.gearmobile.adapters.ProductAdapter;
 import com.example.gearmobile.models.Category;
 import com.example.gearmobile.models.Product;
-import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.services.CategoryService;
 import com.example.gearmobile.services.ProductService;
 

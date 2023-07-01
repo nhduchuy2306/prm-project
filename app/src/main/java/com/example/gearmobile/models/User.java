@@ -1,6 +1,8 @@
 package com.example.gearmobile.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String email;
     private String username;
     private String fullName;
