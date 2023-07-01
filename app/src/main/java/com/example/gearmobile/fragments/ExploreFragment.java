@@ -1,6 +1,7 @@
 package com.example.gearmobile.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,7 +17,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
+import com.example.gearmobile.activities.ProductDetailActivity;
 import com.example.gearmobile.adapters.ProducPaginationtAdapter;
+import com.example.gearmobile.interfaces.ProductCardItemListener;
 import com.example.gearmobile.models.Product;
 import com.example.gearmobile.models.ProductModel;
 import com.example.gearmobile.services.ProductService;
@@ -29,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ExploreFragment extends Fragment {
+public class ExploreFragment extends Fragment implements ProductCardItemListener {
 
     private RecyclerView recyclerView;
     private ProducPaginationtAdapter productAdapter;
@@ -57,7 +60,7 @@ public class ExploreFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         mProductList = new ArrayList<>();
-        productAdapter = new ProducPaginationtAdapter(getContext());
+        productAdapter = new ProducPaginationtAdapter(this);
 
         recyclerView.setAdapter(productAdapter);
 
@@ -143,5 +146,19 @@ public class ExploreFragment extends Fragment {
                 });
             }
         }, 2000);
+    }
+
+    @Override
+    public void onCardClick(Product product) {
+        Intent intent = new Intent(getContext(), ProductDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("product", product);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void addToCart(Product product) {
+
     }
 }

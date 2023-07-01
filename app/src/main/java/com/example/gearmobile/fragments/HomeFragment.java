@@ -1,5 +1,6 @@
 package com.example.gearmobile.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,12 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
+import com.example.gearmobile.activities.ProductDetailActivity;
 import com.example.gearmobile.adapters.CategoryAdapter;
 import com.example.gearmobile.adapters.ProductAdapter;
+import com.example.gearmobile.interfaces.ProductCardItemListener;
 import com.example.gearmobile.models.Category;
 import com.example.gearmobile.models.Product;
 import com.example.gearmobile.services.CategoryService;
@@ -28,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ProductCardItemListener {
 
     private RecyclerView latestProductsRecyclerView;
     private RecyclerView bestSellingRecyclerView;
@@ -49,13 +53,12 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         Toolbar toolbar = view.findViewById(R.id.home_toolbar);
-        toolbar.setTitle("Home");
 
         // Latest Products
         latestProductsRecyclerView = view.findViewById(R.id.home_latest_recycler_view);
         LinearLayoutManager latestProductLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         latestProductsRecyclerView.setLayoutManager(latestProductLinearLayoutManager);
-        latestProductsAdapter = new ProductAdapter(getContext());
+        latestProductsAdapter = new ProductAdapter(this);
         mLatestProducts = new ArrayList<>();
         latestProductsRecyclerView.setAdapter(latestProductsAdapter);
         loadLatestProducts();
@@ -64,7 +67,7 @@ public class HomeFragment extends Fragment {
         bestSellingRecyclerView = view.findViewById(R.id.home_best_selling_recycler_view);
         LinearLayoutManager bestSellingLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         bestSellingRecyclerView.setLayoutManager(bestSellingLinearLayoutManager);
-        bestSellingAdapter = new ProductAdapter(getContext());
+        bestSellingAdapter = new ProductAdapter(this);
         mBestSellingProducts = new ArrayList<>();
         bestSellingRecyclerView.setAdapter(bestSellingAdapter);
         loadBestSellingProducts();
@@ -142,5 +145,19 @@ public class HomeFragment extends Fragment {
                 Log.e("HomeFragment", "onFailure: " + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onCardClick(Product product) {
+        Intent intent = new Intent(getContext(), ProductDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("product", product);
+        intent.putExtra("product", product);
+        startActivity(intent);
+    }
+
+    @Override
+    public void addToCart(Product product) {
+
     }
 }

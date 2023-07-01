@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearmobile.R;
+import com.example.gearmobile.interfaces.ProductCardItemListener;
 import com.example.gearmobile.models.Product;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -29,10 +30,10 @@ public class ProducPaginationtAdapter extends RecyclerView.Adapter<RecyclerView.
     private static final int TYPE_LOADING = 2;
     private List<Product> mProductList;
     private boolean isLoadingAdded = false;
-    private Context mContext;
+    private ProductCardItemListener mProductCardItemListener;
 
-    public ProducPaginationtAdapter(Context context) {
-        mContext = context;
+    public ProducPaginationtAdapter(ProductCardItemListener productCardItemListener) {
+        mProductCardItemListener = productCardItemListener;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -76,17 +77,8 @@ public class ProducPaginationtAdapter extends RecyclerView.Adapter<RecyclerView.
             Picasso.get().load(product.getPicture()).placeholder(androidx.recyclerview.selection.R.drawable.selection_band_overlay).into(productViewHolder.productImage);
             productViewHolder.productName.setText(product.getProductName());
             productViewHolder.productPrice.setText("$"+formattedNumber);
-            productViewHolder.productLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
-            productViewHolder.productAddToCart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Product", "onClick: " + product.getProductName());
-                }
-            });
+            productViewHolder.productLayout.setOnClickListener(v -> mProductCardItemListener.onCardClick(product));
+            productViewHolder.productAddToCart.setOnClickListener(v -> mProductCardItemListener.addToCart(product));
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setVisibility(View.VISIBLE);

@@ -2,6 +2,6 @@ package com.example.gearmobile.interfaces;
 
 import com.example.gearmobile.models.Category;
 
-public interface ICategoryClick {
+public interface CategoryListener {
     void onCategoryClick(Category category);
 }
