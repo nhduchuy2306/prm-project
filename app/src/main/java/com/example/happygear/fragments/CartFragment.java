@@ -49,9 +49,6 @@ public class CartFragment extends Fragment implements CartItemListener {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         cartRecyclerView.setLayoutManager(linearLayoutManager);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(cartRecyclerView.getContext(), linearLayoutManager.getOrientation());
-        cartRecyclerView.addItemDecoration(dividerItemDecoration);
-
         cartAdapter = new CartAdapter(this);
         cartDtoList = getCartDtoList();
         cartAdapter.setCartDtoList(cartDtoList);

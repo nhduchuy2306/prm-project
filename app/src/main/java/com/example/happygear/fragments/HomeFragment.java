@@ -194,6 +194,14 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
 
     @Override
     public void addToCart(Product product) {
+        CartDto existCart = db.cartDao().getCartItem(product.getProductId());
+        if(existCart != null){
+            existCart.setQuantity(existCart.getQuantity() + 1);
+            new Thread(() -> {
+                db.cartDao().update(existCart.getProductId(), existCart.getQuantity());
+            }).start();
+            return;
+        }
         CartDto cartDto = new CartDto(
                 product.getProductId(),
                 1,

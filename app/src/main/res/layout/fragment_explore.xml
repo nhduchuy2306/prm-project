@@ -12,17 +12,18 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" >
+        android:theme="?attr/actionBarTheme">
+
         <ImageButton
             android:id="@+id/btnFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="end"
             android:layout_marginEnd="20dp"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_action_filter"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            android:padding="12dp"
+            android:src="@drawable/ic_action_filter" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
