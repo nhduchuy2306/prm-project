@@ -37,10 +37,9 @@ public class ProfileFragment extends Fragment {
     private Button buttonLogin;
     private SharedPreferences sharedPreferences;
     private User user;
-
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    GoogleSignInAccount account;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
+    private GoogleSignInAccount account;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
