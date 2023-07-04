@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happygear.MainActivity;
 import com.example.happygear.R;
+import com.example.happygear.adapters.CustomArrayAdapter;
 import com.example.happygear.dto.GoogleAuthRequest;
 import com.example.happygear.dto.RegisterRequest;
 import com.example.happygear.models.User;
@@ -42,8 +43,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private EditText email;
     private EditText phone;
+    private EditText address;
     private Spinner genderSn;
-    private String gender;
+    private Boolean gender;
     private Button btnRegister;
     private ImageView ggSignIn;
 
@@ -63,12 +65,15 @@ public class RegisterActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone);
         genderSn = findViewById(R.id.gender);
+        address = findViewById(R.id.address);
         btnRegister = findViewById(R.id.button_register);
         ggSignIn = findViewById(R.id.google_signin);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.gender, android.R.layout.simple_spinner_item);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.gender, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = new CustomArrayAdapter(this,
+                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.gender));
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
@@ -90,18 +95,31 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         // Handle gender select box
-        genderSn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        genderSn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
                 // If user change the default selection
                 // First item is disable and it is used for hint
                 if (position > 0) {
                     // Notify the selected item text
-                    Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                    gender = selectedItemText;
+//                    Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                    if (selectedItemText.equals("Male")) {
+                        gender = true;
+                    } else if (selectedItemText.equals("Female")) {
+                        gender = false;
+                    } else {
+                        gender = null;
+                    }
+
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                gender = null;
+            }
+
         });
 
         // Call api register
@@ -112,19 +130,20 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (isAllFieldsChecked) {
                     RegisterRequest create = new RegisterRequest();
-                    create.setUsername(username.getText().toString());
-                    create.setFullName(fullName.getText().toString());
-                    create.setAddress(null);
-                    create.setPassword(password.getText().toString());
-                    create.setEmail(email.getText().toString());
-                    create.setPhoneNumber(phone.getText().toString());
-                    create.setGender(null);
+                    create.setUsername(username.getText().toString().trim());
+                    create.setFullName(fullName.getText().toString().trim());
+                    create.setAddress(address.getText().toString().trim());
+                    create.setPassword(password.getText().toString().trim());
+                    create.setEmail(email.getText().toString().trim());
+                    create.setPhoneNumber(phone.getText().toString().trim());
+                    create.setGender(gender);
                     create.setRoleId(0);
                     create.setStatus(true);
 
                     // Call api
-//                    createUser(create);
-                    System.out.println(create);
+                    createUser(create);
+                    gender = null;
+                    Toast.makeText(getApplicationContext(), "Welcome " + fullName, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -148,6 +167,20 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (password.length() < 8) {
             password.setError("Password must be minimum 8 characters");
             return false;
+        }
+
+        if (phone.length() > 0 && phone.length() < 10) {
+            phone.setError("Invalid phone number");
+            return false;
+        }
+
+        if (email.length() > 0) {
+            // Define the regular expression pattern for an email address
+            String pattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+            if (!email.getText().toString().trim().matches(pattern)){
+                email.setError("Invalid email");
+                return false;
+            }
         }
 
         // all checked
@@ -177,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.e("RegisterActivity", e.getMessage());
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Register failed!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT);
                 }
             }
 

@@ -168,7 +168,8 @@
                     android:imeOptions="actionNext"
                     android:minWidth="320dp"
                     android:minHeight="50dp"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"/>
 
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.cardview.widget.CardView>
@@ -203,7 +204,8 @@
                     android:imeOptions="actionNext"
                     android:minWidth="320dp"
                     android:minHeight="50dp"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:inputType="phone"/>
 
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.cardview.widget.CardView>

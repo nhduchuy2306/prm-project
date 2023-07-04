@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.activities.LoginActivity;
+import com.example.happygear.activities.RegisterActivity;
 import com.example.happygear.models.User;
 import com.example.happygear.utils.SerializableObject;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,6 +36,7 @@ public class ProfileFragment extends Fragment {
     private TextView profileEmail;
     private Button buttonLogout;
     private Button buttonLogin;
+    private Button buttonRegister;
     private SharedPreferences sharedPreferences;
     private User user;
     private GoogleSignInOptions gso;
@@ -72,6 +74,7 @@ public class ProfileFragment extends Fragment {
         // Initialize view
         profileAreaLayout = view.findViewById(R.id.profile_area);
         buttonLogin = view.findViewById(R.id.loginButton);
+        buttonRegister = view.findViewById(R.id.registerButton);
         buttonLogout = view.findViewById(R.id.logoutButton);
         profileName = view.findViewById(R.id.profile_name);
         profileEmail = view.findViewById(R.id.profile_email);
@@ -85,6 +88,7 @@ public class ProfileFragment extends Fragment {
             profileAreaLayout.setVisibility(View.VISIBLE);
             buttonLogout.setVisibility(View.VISIBLE);
             buttonLogin.setVisibility(View.GONE);
+            buttonRegister.setVisibility(View.GONE);
         } else if (user != null) {
             // User logged in
             profileName.setText(user.getFullName());
@@ -92,20 +96,28 @@ public class ProfileFragment extends Fragment {
             profileAreaLayout.setVisibility(View.VISIBLE);
             buttonLogout.setVisibility(View.VISIBLE);
             buttonLogin.setVisibility(View.GONE);
+            buttonRegister.setVisibility(View.GONE);
         } else {
             // User not logged in
             profileAreaLayout.setVisibility(View.GONE);
             buttonLogout.setVisibility(View.GONE);
             buttonLogin.setVisibility(View.VISIBLE);
+            buttonRegister.setVisibility(View.VISIBLE);
         }
 
         buttonLogin.setOnClickListener(v -> login());
+        buttonRegister.setOnClickListener(v -> register());
         buttonLogout.setOnClickListener(v -> logout());
         return view;
     }
 
     private void login() {
         Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
+    }
+
+    private void register() {
+        Intent intent = new Intent(getContext(), RegisterActivity.class);
         startActivity(intent);
     }
 

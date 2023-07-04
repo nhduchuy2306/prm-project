@@ -32,7 +32,7 @@
     <string name="find_your_product">Find your product...</string>
 
     <string-array name="gender">
-        <item disabled="true" color="#808080">Gender</item>
+        <item>Choose gender...</item>
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
