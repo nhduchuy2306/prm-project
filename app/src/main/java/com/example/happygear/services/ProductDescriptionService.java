@@ -13,6 +13,7 @@ import retrofit2.http.Path;
 public interface ProductDescriptionService {
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
+            .setLenient()
             .create();
 
     String BASE_URL = "https://my-happygear.azurewebsites.net/happygear/api/";
@@ -22,6 +23,6 @@ public interface ProductDescriptionService {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ProductDescriptionService.class);
-    @GET("descriptions/product/{productId}/description")
-    Call<ProductDescription> getProductDescription(@Path("productId")int id);
+    @GET("products/{productId}/description")
+    Call<ProductDescription> getProductDescription(@Path("productId") int productId);
 }

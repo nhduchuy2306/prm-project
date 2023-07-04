@@ -15,79 +15,99 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:ignore="MissingConstraints"
         app:navigationIcon="@drawable/ic_back">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Product Details"
-            android:textSize="20sp"
-            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
-    <com.denzcoskun.imageslider.ImageSlider
-        android:id="@+id/image_slider"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:iss_auto_cycle="true"
-        app:iss_period="1000"
-        app:iss_delay="3000"
-        app:iss_text_align="CENTER"
-        tools:ignore="MissingConstraints"
-        android:layout_below="@id/toolbar_product_detail_activity"/>
-
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/image_slider"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:text="Product Title"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="#000000" />
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/titleTextView"
-        android:id="@+id/modifyAmount">
-
-        <ImageButton
-            android:id="@+id/decreaseButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_remove"
-            android:contentDescription="Remove"/>
-
-        <TextView
-            android:id="@+id/quantityTextView"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_product_detail_activity">
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="25dp"/>
+            android:padding="16dp">
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/image_slider"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:iss_auto_cycle="true"
+                app:iss_period="1000"
+                app:iss_delay="3000"
+                app:iss_text_align="CENTER"
+                tools:ignore="MissingConstraints"/>
 
-        <ImageButton
-            android:id="@+id/increaseButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_add"
-            android:contentDescription="Add"/>
+            <TextView
+                android:id="@+id/detail_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_slider"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:text="Product Title"
+                android:textSize="20sp"
+                android:textColor="#000000" />
 
+            <LinearLayout
+                android:id="@+id/modify_cart_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/detail_product_name"
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/detail_btn_decrease"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_remove"
+                    android:contentDescription="Remove" />
 
+                <TextView
+                    android:id="@+id/detail_product_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="1"
+                    android:textSize="25dp"/>
 
+                <ImageView
+                    android:id="@+id/detail_btn_increase"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_add"
+                    android:contentDescription="Add"/>
 
+                <Button
+                    android:id="@+id/detail_btn_add_to_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="Add to Cart"
+                    android:layout_alignParentBottom="true"/>
+            </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thêm vào giỏ hàng"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true" />
+            <TextView
+                android:id="@+id/detail_product_description_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/modify_cart_layout"
+                android:layout_marginTop="16dp"
+                android:text="Description"
+                android:textSize="20sp"
+                android:textColor="#000000" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_description_title"
+                android:layout_marginTop="16dp"
+                android:id="@+id/detail_product_recycler_view"
+                android:scrollbars="vertical"
+                tools:ignore="MissingConstraints"/>
 
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

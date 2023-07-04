@@ -68,9 +68,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         private ImageView cartImage;
         private TextView cartName;
         private TextView cartPrice;
-        private Button cartIncrease;
+        private ImageView cartIncrease;
         private TextView cartQuantity;
-        private Button cartDecrease;
+        private ImageView cartDecrease;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -4,6 +4,7 @@ package com.example.happygear.models;
 import java.io.Serializable;
 
 public class ProductDescription implements Serializable {
+    private Integer productDescriptionId;
     private Integer productId;
     private String keycap;
     private String switchKeyBoard;
@@ -32,7 +33,8 @@ public class ProductDescription implements Serializable {
     public ProductDescription() {
     }
 
-    public ProductDescription(Integer productId, String keycap, String switchKeyBoard, String typeKeyboard, String connect, String led, String freigh, String itemDimension, String cpu, String ram, String operatingSystem, String battery, String hardDisk, String graphicCard, String keyBoard, String audio, String wifi, String bluetooth, String color, String frameRate, String screenSize, String screenType,Category category,Product product) {
+    public ProductDescription(Integer productDescriptionId, Integer productId, String keycap, String switchKeyBoard, String typeKeyboard, String connect, String led, String freigh, String itemDimension, String cpu, String ram, String operatingSystem, String battery, String hardDisk, String graphicCard, String keyBoard, String audio, String wifi, String bluetooth, String color, String frameRate, String screenSize, String screenType, Category category, Product product) {
+        this.productDescriptionId = productDescriptionId;
         this.productId = productId;
         this.keycap = keycap;
         this.switchKeyBoard = switchKeyBoard;
@@ -57,6 +59,14 @@ public class ProductDescription implements Serializable {
         this.screenType = screenType;
         this.category = category;
         this.product = product;
+    }
+
+    public Integer getProductDescriptionId() {
+        return productDescriptionId;
+    }
+
+    public void setProductDescriptionId(Integer productDescriptionId) {
+        this.productDescriptionId = productDescriptionId;
     }
 
     public Integer getProductId() {
@@ -249,5 +259,35 @@ public class ProductDescription implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductDescription{" +
+                "productId=" + productId +
+                ", keycap='" + keycap + '\'' +
+                ", switchKeyBoard='" + switchKeyBoard + '\'' +
+                ", typeKeyboard='" + typeKeyboard + '\'' +
+                ", connect='" + connect + '\'' +
+                ", led='" + led + '\'' +
+                ", freigh='" + freigh + '\'' +
+                ", itemDimension='" + itemDimension + '\'' +
+                ", cpu='" + cpu + '\'' +
+                ", ram='" + ram + '\'' +
+                ", operatingSystem='" + operatingSystem + '\'' +
+                ", battery='" + battery + '\'' +
+                ", hardDisk='" + hardDisk + '\'' +
+                ", graphicCard='" + graphicCard + '\'' +
+                ", keyBoard='" + keyBoard + '\'' +
+                ", audio='" + audio + '\'' +
+                ", wifi='" + wifi + '\'' +
+                ", bluetooth='" + bluetooth + '\'' +
+                ", color='" + color + '\'' +
+                ", frameRate='" + frameRate + '\'' +
+                ", screenSize='" + screenSize + '\'' +
+                ", screenType='" + screenType + '\'' +
+                ", category=" + category +
+                ", product=" + product +
+                '}';
     }
 }
