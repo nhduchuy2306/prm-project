@@ -32,7 +32,7 @@ public class ProductDescription implements Serializable {
     public ProductDescription() {
     }
 
-    public ProductDescription(Integer productId, String keycap, String switchKeyBoard, String typeKeyboard, String connect, String led, String freigh, String itemDimension, String cpu, String ram, String operatingSystem, String battery, String hardDisk, String graphicCard, String keyBoard, String audio, String wifi, String bluetooth, String color, String frameRate, String screenSize, String screenType, Category category, Product product) {
+    public ProductDescription(Integer productId, String keycap, String switchKeyBoard, String typeKeyboard, String connect, String led, String freigh, String itemDimension, String cpu, String ram, String operatingSystem, String battery, String hardDisk, String graphicCard, String keyBoard, String audio, String wifi, String bluetooth, String color, String frameRate, String screenSize, String screenType,Category category,Product product) {
         this.productId = productId;
         this.keycap = keycap;
         this.switchKeyBoard = switchKeyBoard;
