@@ -27,4 +27,7 @@ public interface CartDao {
 
     @Query("SELECT * FROM cart WHERE productId = :productId")
     CartDto getCartItem(int productId);
+
+    @Query("DELETE FROM cart")
+    void clearCart();
 }
