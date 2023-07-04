@@ -18,11 +18,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.example.happygear.R;
 import com.example.happygear.activities.ProductDetailActivity;
 import com.example.happygear.adapters.CategoryAdapter;
 import com.example.happygear.adapters.ProductAdapter;
+import com.example.happygear.databases.AppDatabase;
+import com.example.happygear.dto.CartDto;
 import com.example.happygear.interfaces.ProductCardItemListener;
 import com.example.happygear.models.Category;
 import com.example.happygear.models.Product;
@@ -47,10 +50,17 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
     private List<Product> mLatestProducts;
     private List<Product> mBestSellingProducts;
     private List<Category> mCategories;
-
+    
     private EditText etSearch;
-
     private ImageButton btnSearch;
+    private AppDatabase db;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        db = Room.databaseBuilder(requireContext(), AppDatabase.class, "cart.db").allowMainThreadQueries().build();
+    }
+    
 
     @Nullable
     @Override
@@ -184,7 +194,17 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
 
     @Override
     public void addToCart(Product product) {
+        CartDto cartDto = new CartDto(
+                product.getProductId(),
+                1,
+                product.getPrice(),
+                product.getProductName(),
+                product.getPicture()
+        );
 
+        new Thread(() -> {
+            db.cartDao().insert(cartDto);
+        }).start();
     }
 
 
