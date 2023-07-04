@@ -2,22 +2,16 @@ package com.example.happygear.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,10 +19,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.example.happygear.R;
 import com.example.happygear.activities.ProductDetailActivity;
 import com.example.happygear.adapters.ProducPaginationtAdapter;
+import com.example.happygear.databases.AppDatabase;
+import com.example.happygear.dto.CartDto;
 import com.example.happygear.interfaces.ProductCardItemListener;
 import com.example.happygear.models.Product;
 import com.example.happygear.models.ProductModel;
@@ -94,6 +91,14 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
     private int currentPage = 1;
     private int totalPage = 1;
 
+    private AppDatabase db;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        db = Room.databaseBuilder(requireContext(), AppDatabase.class, "cart.db").allowMainThreadQueries().build();
+    }
+
     @Nullable
     @Override
     public View onCreateView(
@@ -143,7 +148,7 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
         return view;
     }
 
-    private void setListIds(){
+    private void setListIds() {
         listCategoryIds.add(1);
         listCategoryIds.add(2);
         listCategoryIds.add(3);
@@ -225,8 +230,6 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
                 bottomSheetDialog.show();
 
 
-
-
             }
         });
     }
@@ -238,7 +241,7 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
                 if (!radioButton.isSelected()) {
                     radioButton.setChecked(true);
                     radioButton.setSelected(true);
-                    switch (radioButton.getText().toString()){
+                    switch (radioButton.getText().toString()) {
                         case "Laptop":
                             listCategoryIds.add(1);
                             break;
@@ -277,7 +280,7 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
                 } else {
                     radioButton.setChecked(false);
                     radioButton.setSelected(false);
-                    switch (radioButton.getText().toString()){
+                    switch (radioButton.getText().toString()) {
                         case "Laptop":
                             listCategoryIds.remove(listCategoryIds.indexOf(1));
                             break;
@@ -324,52 +327,14 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
         ProductService.productService
                 .getProductsFilter(1, 8, listCategoryIds, listBrandIds, minPrice, maxPrice, search)
                 .enqueue(new Callback<ProductModel>() {
-            @Override
-            public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
-                if (response.isSuccessful()) {
-                    ProductModel productModel = response.body();
-                    if (productModel != null) {
-                        mProductList = productModel.getData();
-                        totalPage = productModel.getSize();
-                        productAdapter.setProductList(mProductList);
-                        if (currentPage < totalPage) {
-                            productAdapter.addLoadingFooter();
-                        } else {
-                            isLastPage = true;
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductModel> call, Throwable t) {
-                Log.e("ExploreFragment", "onFailure: " + t.getMessage());
-            }
-        });
-    }
-
-
-
-    private void loadNextPage() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                productAdapter.removeLoadingFooter();
-                ProductService.productService
-                        .getProductsFilter(currentPage, 8, listCategoryIds, listBrandIds, minPrice, maxPrice,search)
-                        .enqueue(new Callback<ProductModel>() {
-                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                         if (response.isSuccessful()) {
                             ProductModel productModel = response.body();
                             if (productModel != null) {
-                                mProductList.addAll(productModel.getData());
-                                productAdapter.removeLoadingFooter();
-                                isLoading = false;
+                                mProductList = productModel.getData();
+                                totalPage = productModel.getSize();
                                 productAdapter.setProductList(mProductList);
-                                productAdapter.notifyDataSetChanged();
-                                isLoading = false;
                                 if (currentPage < totalPage) {
                                     productAdapter.addLoadingFooter();
                                 } else {
@@ -384,6 +349,42 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
                         Log.e("ExploreFragment", "onFailure: " + t.getMessage());
                     }
                 });
+    }
+
+    private void loadNextPage() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                productAdapter.removeLoadingFooter();
+                ProductService.productService
+                        .getProductsFilter(currentPage, 8, listCategoryIds, listBrandIds, minPrice, maxPrice, search)
+                        .enqueue(new Callback<ProductModel>() {
+                            @SuppressLint("NotifyDataSetChanged")
+                            @Override
+                            public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+                                if (response.isSuccessful()) {
+                                    ProductModel productModel = response.body();
+                                    if (productModel != null) {
+                                        mProductList.addAll(productModel.getData());
+                                        productAdapter.removeLoadingFooter();
+                                        isLoading = false;
+                                        productAdapter.setProductList(mProductList);
+                                        productAdapter.notifyDataSetChanged();
+                                        isLoading = false;
+                                        if (currentPage < totalPage) {
+                                            productAdapter.addLoadingFooter();
+                                        } else {
+                                            isLastPage = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ProductModel> call, Throwable t) {
+                                Log.e("ExploreFragment", "onFailure: " + t.getMessage());
+                            }
+                        });
             }
         }, 2000);
     }
@@ -399,6 +400,16 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
 
     @Override
     public void addToCart(Product product) {
+        CartDto cartDto = new CartDto(
+                product.getProductId(),
+                1,
+                product.getPrice(),
+                product.getProductName(),
+                product.getPicture()
+        );
 
+        new Thread(() -> {
+            db.cartDao().insert(cartDto);
+        }).start();
     }
 }

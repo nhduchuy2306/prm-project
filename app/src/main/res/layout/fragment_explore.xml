@@ -17,9 +17,12 @@
             android:id="@+id/btnFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="12dp"
             android:layout_gravity="end"
-            android:layout_marginRight="20dp"
-            app:srcCompat="@drawable/ic_action_filter" />
+            android:layout_marginEnd="20dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_action_filter"
+            android:contentDescription="TODO" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
