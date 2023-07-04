@@ -1,4 +1,4 @@
-package com.example.gearmobile.fragments;
+package com.example.happygear.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,14 +26,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gearmobile.R;
-import com.example.gearmobile.activities.ProductDetailActivity;
-import com.example.gearmobile.adapters.ProducPaginationtAdapter;
-import com.example.gearmobile.interfaces.ProductCardItemListener;
-import com.example.gearmobile.models.Product;
-import com.example.gearmobile.models.ProductModel;
-import com.example.gearmobile.services.ProductService;
-import com.example.gearmobile.utils.PaginationScrollListener;
+import com.example.happygear.R;
+import com.example.happygear.activities.ProductDetailActivity;
+import com.example.happygear.adapters.ProducPaginationtAdapter;
+import com.example.happygear.interfaces.ProductCardItemListener;
+import com.example.happygear.models.Product;
+import com.example.happygear.models.ProductModel;
+import com.example.happygear.services.ProductService;
+import com.example.happygear.utils.PaginationScrollListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
