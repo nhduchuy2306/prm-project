@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class CartFragment extends Fragment implements CartItemListener {
     private RecyclerView cartRecyclerView;
     private CartAdapter cartAdapter;
     private List<CartDto> cartDtoList;
+    private TextView cartEmptyTextView;
     private AppDatabase db;
 
     @Override
@@ -45,6 +47,8 @@ public class CartFragment extends Fragment implements CartItemListener {
             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        cartEmptyTextView = view.findViewById(R.id.cart_empty_text);
+
         cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         cartRecyclerView.setLayoutManager(linearLayoutManager);
@@ -59,6 +63,12 @@ public class CartFragment extends Fragment implements CartItemListener {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeUtil);
         itemTouchHelper.attachToRecyclerView(cartRecyclerView);
 
+        if(cartDtoList.size() == 0) {
+            cartEmptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            cartEmptyTextView.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -70,6 +80,11 @@ public class CartFragment extends Fragment implements CartItemListener {
     @Override
     public void onRemove(CartDto cartDto) {
         cartDtoList.remove(cartDto);
+        if(cartDtoList.size() == 0) {
+            cartEmptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            cartEmptyTextView.setVisibility(View.GONE);
+        }
         new Thread(() -> {
             db.cartDao().delete(cartDto.getProductId());
         }).start();
