@@ -30,4 +30,11 @@
     <string name="navigation_notifications">Notifications</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="find_your_product">Find your product...</string>
+
+    <string-array name="gender">
+        <item disabled="true" color="#808080">Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 </resources>

@@ -2,6 +2,7 @@ package com.example.happygear.services;
 
 import com.example.happygear.dto.GoogleAuthRequest;
 import com.example.happygear.dto.LoginRequest;
+import com.example.happygear.dto.RegisterRequest;
 import com.example.happygear.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,4 +34,6 @@ public interface UserService {
     Call<User> getUserByUsername(@Field("username") String username);
     @POST("users/google/auth")
     Call<User> registerWithGoogle(@Body GoogleAuthRequest googleAuthRequest);
+    @POST("users/register")
+    Call<User> register(@Body RegisterRequest registerRequest);
 }
