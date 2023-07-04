@@ -37,10 +37,9 @@ public class ProfileFragment extends Fragment {
     private Button buttonLogin;
     private SharedPreferences sharedPreferences;
     private User user;
-
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    GoogleSignInAccount account;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
+    private GoogleSignInAccount account;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +55,7 @@ public class ProfileFragment extends Fragment {
             if (userSerialized != null) {
                 user = (User) SerializableObject.deserializeObject(userSerialized);
             }
+            account = GoogleSignIn.getLastSignedInAccount(requireContext());
         } catch (Exception e) {
             Log.e("ProfileFragment", e.getMessage());
         }
@@ -75,8 +75,6 @@ public class ProfileFragment extends Fragment {
         buttonLogout = view.findViewById(R.id.logoutButton);
         profileName = view.findViewById(R.id.profile_name);
         profileEmail = view.findViewById(R.id.profile_email);
-
-        account = GoogleSignIn.getLastSignedInAccount(requireContext());
 
         if (account != null) {
             String personName = account.getDisplayName();
@@ -127,9 +125,7 @@ public class ProfileFragment extends Fragment {
             });
         } else {
             Intent intent = new Intent(requireActivity(), MainActivity.class);
-            // Clear the back stack, so the user cannot navigate back to the logout fragment
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            // Start the main activity
             startActivity(intent);
         }
     }
