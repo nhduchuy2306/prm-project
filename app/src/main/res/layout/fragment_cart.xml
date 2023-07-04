@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_purple">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cart_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cart Fragment"
-        android:layout_centerInParent="true"
-        android:textColor="@color/white"
-        android:textSize="30sp"/>
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/cart_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Cart"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_below="@id/cart_toolbar"
+        android:id="@+id/cart_recycler_view"/>
 
 </RelativeLayout>
