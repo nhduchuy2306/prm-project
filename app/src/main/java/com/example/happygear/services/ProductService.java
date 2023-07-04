@@ -33,8 +33,13 @@ public interface ProductService {
     @GET("products/best-selling")
     Call<List<Product>> getBestSellingProducts();
 
-
-
+    @GET("products")
+    Call<ProductModel> getProductsFilter(@Query("page") int page, @Query("limit") int limit,
+                                         @Query("categoryIds") List<Integer> categoryIds,
+                                         @Query("brandIds") List<Integer> brandIds,
+                                         @Query("fromPrice") Double fromPrice,
+                                         @Query("toPrice") Double toPrice,
+                                         @Query("search") String search);
 
 
 }
