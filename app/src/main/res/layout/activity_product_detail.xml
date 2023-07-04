@@ -13,26 +13,81 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        app:navigationIcon="@drawable/ic_back">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Product Details"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
     <com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/image_slider"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         app:iss_auto_cycle="true"
         app:iss_period="1000"
         app:iss_delay="3000"
         app:iss_text_align="CENTER"
         tools:ignore="MissingConstraints"
         android:layout_below="@id/toolbar_product_detail_activity"/>
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_slider"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Product Title"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#000000" />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/titleTextView"
+        android:id="@+id/modifyAmount">
+
+        <ImageButton
+            android:id="@+id/decreaseButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_remove"
+            android:contentDescription="Remove"/>
+
+        <TextView
+            android:id="@+id/quantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="25dp"/>
+
+        <ImageButton
+            android:id="@+id/increaseButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_add"
+            android:contentDescription="Add"/>
+
+
+    </LinearLayout>
+
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm vào giỏ hàng"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true" />
+
 
 
 </RelativeLayout>

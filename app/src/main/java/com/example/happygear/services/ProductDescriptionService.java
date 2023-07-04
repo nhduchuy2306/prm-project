@@ -22,6 +22,6 @@ public interface ProductDescriptionService {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ProductDescriptionService.class);
-    @GET("descriptions/product/{productId}")
+    @GET("descriptions/product/{productId}/description")
     Call<ProductDescription> getProductDescription(@Path("productId")int id);
 }
