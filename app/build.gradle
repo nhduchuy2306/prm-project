@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.gearmobile'
+    namespace 'com.example.happygear'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.gearmobile"
+        applicationId "com.example.happygear"
         minSdk 17
         targetSdk 33
         versionCode 1
@@ -59,4 +59,6 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.5.2'
     // Image slide show
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.2'
+    // google sign in
+    implementation 'com.google.android.gms:play-services-auth:20.6.0'
 }
