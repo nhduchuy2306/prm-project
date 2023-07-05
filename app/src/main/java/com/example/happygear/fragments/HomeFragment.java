@@ -6,9 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import com.example.happygear.models.Category;
 import com.example.happygear.models.Product;
 import com.example.happygear.services.CategoryService;
 import com.example.happygear.services.ProductService;
+import com.example.happygear.utils.AppUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,10 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
     private List<Product> mLatestProducts;
     private List<Product> mBestSellingProducts;
     private List<Category> mCategories;
-    
+    private TextView tvLatestProducts;
+    private TextView tvBestSellingProducts;
+    private TextView tvCategories;
+    private ProgressBar progressBar;
     private EditText etSearch;
     private ImageButton btnSearch;
     private AppDatabase db;
@@ -59,8 +64,12 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = Room.databaseBuilder(requireContext(), AppDatabase.class, "cart.db").allowMainThreadQueries().build();
+
+        if (!AppUtil.isNetworkAvailable(requireContext())) {
+            Toast.makeText(requireContext(), "Network disconnected", Toast.LENGTH_SHORT).show();
+        }
     }
-    
+
 
     @Nullable
     @Override
@@ -71,16 +80,26 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         Toolbar toolbar = view.findViewById(R.id.home_toolbar);
+
+        tvCategories = view.findViewById(R.id.home_category_text);
+        tvCategories.setVisibility(View.GONE);
+        tvBestSellingProducts = view.findViewById(R.id.home_best_selling_text);
+        tvBestSellingProducts.setVisibility(View.GONE);
+        tvLatestProducts = view.findViewById(R.id.home_latest_text);
+        tvLatestProducts.setVisibility(View.GONE);
+        progressBar = view.findViewById(R.id.home_progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Search
         etSearch = view.findViewById(R.id.home_search);
         btnSearch = view.findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String search = etSearch.getText().toString();
-                if(search.isEmpty()) {
+                if (search.isEmpty()) {
                     Toast.makeText(getContext(), "Please enter a search term", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("search", search);
                     Fragment fragment = new ExploreFragment();
@@ -130,6 +149,9 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
                         mLatestProducts = latestProducts;
                         latestProductsAdapter.setProductList(mLatestProducts);
                         latestProductsAdapter.notifyDataSetChanged();
+
+                        tvLatestProducts.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }
@@ -151,6 +173,8 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
                         mBestSellingProducts = bestSellingProducts;
                         bestSellingAdapter.setProductList(mBestSellingProducts);
                         bestSellingAdapter.notifyDataSetChanged();
+
+                        tvBestSellingProducts.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -172,6 +196,8 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
                         mCategories = categories;
                         categoryAdapter.setCategoryList(mCategories);
                         categoryAdapter.notifyDataSetChanged();
+
+                        tvCategories.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -195,7 +221,7 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
     @Override
     public void addToCart(Product product) {
         CartDto existCart = db.cartDao().getCartItem(product.getProductId());
-        if(existCart != null){
+        if (existCart != null) {
             existCart.setQuantity(existCart.getQuantity() + 1);
             new Thread(() -> {
                 db.cartDao().update(existCart.getProductId(), existCart.getQuantity());
@@ -214,6 +240,4 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
             db.cartDao().insert(cartDto);
         }).start();
     }
-
-
 }

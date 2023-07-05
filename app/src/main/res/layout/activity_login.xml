@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_login"
     tools:context=".activities.LoginActivity">
 
     <LinearLayout
@@ -20,7 +21,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="32dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/giphy" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,7 +30,7 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="16dp"
             android:text="@string/text_signin_message"
-            android:textColor="#696969"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -104,11 +105,12 @@
 
         <Button
             android:id="@+id/button_signin"
-            style="@style/Button1"
             android:layout_width="342dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
+            android:padding="10dp"
+            android:textSize="25sp"
             android:text="@string/button_login" />
 
         <LinearLayout
@@ -124,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/text_signin_social_media"
-                android:textColor="@color/md_black_1000"
+                android:textColor="@color/white"
                 android:textSize="15sp" />
 
             <LinearLayout

@@ -42,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 else if(item.getItemId() == R.id.navigation_cart) {
                     replaceFragment(new CartFragment());
                 }
-                else if(item.getItemId() == R.id.navigation_chat) {
-                    replaceFragment(new ChatFragment());
-                }
                 else if(item.getItemId() == R.id.navigation_profile) {
                     replaceFragment(new ProfileFragment());
                 }

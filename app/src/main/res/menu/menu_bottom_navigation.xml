@@ -14,10 +14,6 @@
         android:icon="@drawable/ic_nav_cart"
         android:title="@string/navgation_cart" />
     <item
-        android:id="@+id/navigation_chat"
-        android:icon="@drawable/ic_nav_chat"
-        android:title="@string/navgation_chat" />
-    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_nav_person"
         android:title="@string/navgation_profile" />

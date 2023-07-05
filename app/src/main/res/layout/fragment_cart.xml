@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/gradient_screen">
 
         <TextView
             android:id="@+id/cart_title"
@@ -19,7 +19,8 @@
             android:gravity="center"
             android:text="Cart"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="30sp"
+            android:textStyle="bold"/>
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
