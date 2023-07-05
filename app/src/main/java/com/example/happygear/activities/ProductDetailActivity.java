@@ -70,13 +70,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         db = Room.databaseBuilder(this, AppDatabase.class, "cart.db").allowMainThreadQueries().build();
 
         Toolbar toolbar = findViewById(R.id.toolbar_product_detail_activity);
-        toolbar.setTitle("Product Detail");
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
         loadProductDescription();
         loadProductPicture();
 

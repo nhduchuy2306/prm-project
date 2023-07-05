@@ -15,6 +15,17 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:ignore="MissingConstraints"
         app:navigationIcon="@drawable/ic_back">
+
+        <TextView
+            android:id="@+id/toolbar_product_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Product Details"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView

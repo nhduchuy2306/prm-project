@@ -107,8 +107,6 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
-        Toolbar toolbar = view.findViewById(R.id.explore_toolbar);
-        toolbar.setTitle("Explore");
         filterButton = view.findViewById(R.id.btnFilter);
 
         Bundle bundle = getArguments();
