@@ -22,8 +22,10 @@ import androidx.room.Room;
 
 import com.example.happygear.R;
 import com.example.happygear.adapters.CartAdapter;
+import com.example.happygear.adapters.CheckOutAdapter;
 import com.example.happygear.databases.AppDatabase;
 import com.example.happygear.dto.CartDto;
+import com.example.happygear.dto.CheckoutDto;
 import com.example.happygear.dto.CreateOrderDto;
 import com.example.happygear.interfaces.CartItemListener;
 import com.example.happygear.models.User;
@@ -32,8 +34,10 @@ import com.example.happygear.utils.SerializableObject;
 import com.example.happygear.utils.SwipeUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.stream.JsonReader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,10 +52,16 @@ public class CartFragment extends Fragment implements CartItemListener {
     private TextView cartEmptyTextView;
     private Button checkoutButton;
     private AppDatabase db;
-
     private SharedPreferences sharedPreferences;
     private User user;
     private GoogleSignInAccount account;
+
+    private RecyclerView checkoutRecyclerView;
+    private CheckOutAdapter checkOutAdapter;
+    private TextView checkoutTotal;
+    private Button checkoutProcessButton;
+    private BottomSheetDialog bottomSheetDialog;
+    private List<CheckoutDto> checkoutDtoList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +76,7 @@ public class CartFragment extends Fragment implements CartItemListener {
             if (userSerialized != null) {
                 user = (User) SerializableObject.deserializeObject(userSerialized);
             }
+            bottomSheetDialog = new BottomSheetDialog(getContext());
         } catch (Exception e) {
             Log.e("ProfileFragment", e.getMessage());
         }
@@ -81,6 +92,7 @@ public class CartFragment extends Fragment implements CartItemListener {
 
         cartEmptyTextView = view.findViewById(R.id.cart_empty_text);
         checkoutButton = view.findViewById(R.id.cart_checkout_button);
+        checkoutDtoList = new ArrayList<>();
 
         cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -104,7 +116,7 @@ public class CartFragment extends Fragment implements CartItemListener {
             checkoutButton.setVisibility(View.VISIBLE);
         }
 
-        checkoutButton.setOnClickListener(v -> checkOut());
+        checkoutButton.setOnClickListener(v -> checkOutPopUp());
 
         return view;
     }
@@ -153,6 +165,40 @@ public class CartFragment extends Fragment implements CartItemListener {
         cartAdapter.notifyDataSetChanged();
     }
 
+    private void checkOutPopUp(){
+        View dialogView = getLayoutInflater().inflate(R.layout.bottom_checkout, null);
+
+        checkoutTotal = dialogView.findViewById(R.id.tv_total_checkout);
+        checkoutProcessButton = dialogView.findViewById(R.id.btn_checkout_process);
+
+        checkoutRecyclerView = dialogView.findViewById(R.id.recycler_view_checkout);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        checkoutRecyclerView.setLayoutManager(linearLayoutManager);
+
+        checkOutAdapter = new CheckOutAdapter();
+        Double total = 0.0;
+
+        for (CartDto cartDto : getCartDtoList()) {
+            total += cartDto.getQuantity() * cartDto.getPrice();
+            CheckoutDto checkoutDto = new CheckoutDto(
+                    cartDto.getProductName(),
+                    cartDto.getQuantity() * cartDto.getPrice(),
+                    cartDto.getQuantity()
+            );
+            checkoutDtoList.add(checkoutDto);
+        }
+
+        checkOutAdapter.setDataCheckout(checkoutDtoList);
+        checkoutRecyclerView.setAdapter(checkOutAdapter);
+        String formattedNumber = String.valueOf(total).replaceAll("\\.0+$", "");
+        checkoutTotal.setText("$"+formattedNumber);
+
+        checkoutProcessButton.setOnClickListener(v -> checkOut());
+
+        bottomSheetDialog.setContentView(dialogView);
+        bottomSheetDialog.show();
+    }
+
     private void checkOut() {
         String username = "";
         if (account != null) {
@@ -180,6 +226,8 @@ public class CartFragment extends Fragment implements CartItemListener {
                     }).start();
                     cartEmptyTextView.setVisibility(View.VISIBLE);
                     checkoutButton.setVisibility(View.GONE);
+                    checkoutDtoList.clear();
+                    bottomSheetDialog.dismiss();
 
                     Toast.makeText(requireContext(), "Order created successfully", Toast.LENGTH_SHORT).show();
                 }
