@@ -14,6 +14,17 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:text="Explore"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
         <ImageButton
             android:id="@+id/btnFilter"
             android:layout_width="50dp"

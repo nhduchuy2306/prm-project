@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.happygear.MainActivity;
 import com.example.happygear.R;
@@ -58,6 +59,9 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Toolbar toolbar = findViewById(R.id.register_toolbar);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         username = findViewById(R.id.username);
         fullName = findViewById(R.id.fullName);
