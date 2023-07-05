@@ -207,6 +207,11 @@ public class CartFragment extends Fragment implements CartItemListener {
             username = user.getUsername();
         }
 
+        if(username.equals("")){
+            Toast.makeText(requireContext(), "Please login to continue", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Log.d("CartFragment", username);
 
         CreateOrderDto createOrderDto = new CreateOrderDto(username, cartDtoList);
