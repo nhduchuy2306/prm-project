@@ -33,7 +33,7 @@ public class ProductDescriptionAdapter extends RecyclerView.Adapter<ProductDescr
         DescriptionDto descriptionDto = descriptionDtoList.get(position);
         if(descriptionDto == null) return;
 
-        holder.productDescription.setText(descriptionDto.getDescription());
+        holder.productDescription.setText(descriptionDto.getDescription()+" : " );
         holder.productDescriptionValue.setText(descriptionDto.getValue());
     }
 

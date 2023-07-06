@@ -2,7 +2,6 @@ package com.example.happygear.activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -146,7 +145,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         CartDto cartDto = new CartDto(
                 product.getProductId(),
-                1,
+                quantity,
                 product.getPrice(),
                 product.getProductName(),
                 product.getPicture()

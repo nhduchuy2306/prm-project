@@ -3,22 +3,20 @@ package com.example.happygear.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.happygear.R;
 import com.example.happygear.adapters.OrderHistoryAdapter;
-import com.example.happygear.models.Order;
-import com.example.happygear.models.ProductPicture;
-import com.example.happygear.models.User;
-import com.example.happygear.services.ProductPictureService;
+import com.example.happygear.databases.AppDatabase;
+import com.example.happygear.dto.CartDto;
+import com.example.happygear.dto.OrderDetailModel;
+import com.example.happygear.interfaces.OrderHistoryListener;
 import com.example.happygear.services.UserService;
 
 import java.util.List;
@@ -27,26 +25,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderHistoryActivity extends AppCompatActivity {
+public class OrderHistoryActivity extends AppCompatActivity implements OrderHistoryListener {
 
-    private User user;
     private RecyclerView rcvOrderHistoryRecyclerView;
-
     private OrderHistoryAdapter orderHistoryAdapter;
-    private List<Order> mOrders;
-
+    private List<OrderDetailModel> orderDetailModels;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_profile);
 
+        db = Room.databaseBuilder(this, AppDatabase.class, "cart.db").allowMainThreadQueries().build();
+
         Toolbar toolbar = findViewById(R.id.order_history_toolbar);
         toolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
         });
 
-        rcvOrderHistoryRecyclerView =findViewById(R.id.rcv_order_history);
+        rcvOrderHistoryRecyclerView = findViewById(R.id.rcv_order_history);
         orderHistoryAdapter = new OrderHistoryAdapter(this);
 
         LinearLayoutManager LinearLayoutmanager = new LinearLayoutManager(this);
@@ -59,22 +57,43 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private void loadOrderHistory() {
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
-        UserService.userService.getOrdersbyUsername(username).enqueue(
-                new Callback<List<Order>>() {
-                    @Override
-                    public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
-                        if (response.isSuccessful()) {
-                            mOrders = response.body();
-                            orderHistoryAdapter.setOrderList(mOrders);
-                            orderHistoryAdapter.notifyDataSetChanged();
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<List<Order>> call, Throwable t) {
-                        Log.d("OrderHistoryActivity", "onFailure: " + t.getMessage());
-                    }
+        UserService.userService.getAllOrderDetailsByUsername(username).enqueue(new Callback<List<OrderDetailModel>>() {
+            @Override
+            public void onResponse(Call<List<OrderDetailModel>> call, Response<List<OrderDetailModel>> response) {
+                if (response.isSuccessful()) {
+                    orderDetailModels = response.body();
+                    orderHistoryAdapter.setmOrderDetailModelList(orderDetailModels);
                 }
+            }
+
+            @Override
+            public void onFailure(Call<List<OrderDetailModel>> call, Throwable t) {
+                Log.e("Error", t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onOrderHistoryClick(OrderDetailModel orderDetailModel) {
+        CartDto existCart = db.cartDao().getCartItem(orderDetailModel.getProductId());
+        if (existCart != null) {
+            existCart.setQuantity(existCart.getQuantity() + 1);
+            new Thread(() -> {
+                db.cartDao().update(existCart.getProductId(), existCart.getQuantity());
+            }).start();
+            return;
+        }
+        CartDto cartDto = new CartDto(
+                orderDetailModel.getProductId(),
+                1,
+                orderDetailModel.getPrice(),
+                orderDetailModel.getProductName(),
+                orderDetailModel.getPicture()
         );
+
+        new Thread(() -> {
+            db.cartDao().insert(cartDto);
+        }).start();
     }
 }

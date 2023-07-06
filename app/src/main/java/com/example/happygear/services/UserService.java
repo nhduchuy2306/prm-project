@@ -2,6 +2,7 @@ package com.example.happygear.services;
 
 import com.example.happygear.dto.GoogleAuthRequest;
 import com.example.happygear.dto.LoginRequest;
+import com.example.happygear.dto.OrderDetailModel;
 import com.example.happygear.dto.RegisterRequest;
 import com.example.happygear.models.Order;
 import com.example.happygear.models.ProductPicture;
@@ -44,4 +45,7 @@ public interface UserService {
 
     @GET("users/{username}/orders")
     Call<List<Order>> getOrdersbyUsername(@Path("username") String username);
+
+    @GET("users/{username}/order-details")
+    Call<List<OrderDetailModel>> getAllOrderDetailsByUsername(@Path("username") String username);
 }

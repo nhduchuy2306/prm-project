@@ -4,28 +4,31 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.happygear.R;
-import com.example.happygear.models.Order;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.happygear.R;
+import com.example.happygear.dto.OrderDetailModel;
+import com.example.happygear.interfaces.OrderHistoryListener;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
-public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder>{
+public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder> {
 
-    private List<Order> mOrderList;
+    private List<OrderDetailModel> mOrderDetailModelList;
+    private OrderHistoryListener mOrderHistoryListener;
 
-    private Context mContext;
-
-    public OrderHistoryAdapter(Context context){
-        mContext = context;
+    public OrderHistoryAdapter(OrderHistoryListener orderHistoryListener) {
+        mOrderHistoryListener = orderHistoryListener;
     }
 
-    public void setOrderList(List<Order> orderList){
-        mOrderList = orderList;
+    public void setmOrderDetailModelList(List<OrderDetailModel> OrderDetailModelList) {
+        mOrderDetailModelList = OrderDetailModelList;
         notifyDataSetChanged();
     }
 
@@ -38,41 +41,46 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryViewHolder holder, int position) {
-        Order order = mOrderList.get(position);
-        if (order == null){
+        OrderDetailModel orderDetailModel = mOrderDetailModelList.get(position);
+        if (orderDetailModel == null) {
             return;
         }
-        String formattedNumber = String.valueOf(order.getTotal()).replaceAll("\\.0+$", "");
+        String formattedNumberPrice = String.valueOf(orderDetailModel.getPrice()).replaceAll("\\.0+$", "");
+        String formattedNumberTotal = String.valueOf(orderDetailModel.getPrice() * orderDetailModel.getQuantity()).replaceAll("\\.0+$", "");
+        Picasso.get().load(orderDetailModel.getPicture()).placeholder(androidx.recyclerview.selection.R.drawable.selection_band_overlay).into(holder.orderHistoryImage);
 
-        holder.orderId.setText(order.getOrderId().toString());
-        holder.orderDate.setText(order.getDate().toString());
-        holder.orderStatus.setText(order.getStatus().toString());
-        holder.orderTotal.setText("$"+formattedNumber);
+        holder.orderHistoryItemName.setText(orderDetailModel.getProductName());
+        holder.orderHistoryItemPrice.setText("Price: $" + formattedNumberPrice);
+        holder.orderHistoryItemQuantity.setText("x" + orderDetailModel.getQuantity());
+        holder.orderHistoryTotalPrice.setText("$" + formattedNumberTotal);
+        holder.orderAgainButton.setOnClickListener(v -> mOrderHistoryListener.onOrderHistoryClick(orderDetailModel));
     }
 
     @Override
     public int getItemCount() {
-        if (mOrderList != null){
-            return mOrderList.size();
+        if (mOrderDetailModelList != null) {
+            return mOrderDetailModelList.size();
         }
         return 0;
     }
 
-    public class OrderHistoryViewHolder extends RecyclerView.ViewHolder{
+    public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
 
-        private LinearLayout orderhistoryItemLayout;
-        private TextView orderId;
-        private TextView orderStatus;
-        private TextView orderTotal;
-        private TextView orderDate;
+        private ImageView orderHistoryImage;
+        private TextView orderHistoryItemName;
+        private TextView orderHistoryItemPrice;
+        private TextView orderHistoryItemQuantity;
+        private TextView orderHistoryTotalPrice;
+        private Button orderAgainButton;
 
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            orderhistoryItemLayout = itemView.findViewById(R.id.order_history_item_layout);
-            orderId = itemView.findViewById(R.id.order_id);
-            orderStatus = itemView.findViewById(R.id.order_status);
-            orderTotal = itemView.findViewById(R.id.order_status);
-            orderDate = itemView.findViewById(R.id.order_date);
+            orderHistoryImage = itemView.findViewById(R.id.order_history_item_image);
+            orderHistoryItemName = itemView.findViewById(R.id.order_history_item_name);
+            orderHistoryItemPrice = itemView.findViewById(R.id.order_history_item_price);
+            orderHistoryItemQuantity = itemView.findViewById(R.id.order_history_item_quantity);
+            orderHistoryTotalPrice = itemView.findViewById(R.id.order_history_item_total_price);
+            orderAgainButton = itemView.findViewById(R.id.order_history_item_order_again);
         }
     }
 }
