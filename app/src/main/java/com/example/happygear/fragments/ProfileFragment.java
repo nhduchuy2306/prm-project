@@ -36,13 +36,8 @@ public class ProfileFragment extends Fragment {
 
     private LinearLayout profileAreaOrderHistoryLayout;
     private LinearLayout profileAreaAboutUsLayout;
-    private LinearLayout profileAreaMapLayout;
     private TextView profileName;
     private TextView profileEmail;
-
-    private TextView profileOrderHistory;
-    private TextView profileAboutUs;
-    private TextView profileMap;
     private Button buttonLogout;
     private Button buttonLogin;
     private Button buttonRegister;
@@ -87,12 +82,8 @@ public class ProfileFragment extends Fragment {
         buttonLogout = view.findViewById(R.id.logoutButton);
         profileName = view.findViewById(R.id.profile_name);
         profileEmail = view.findViewById(R.id.profile_email);
-        profileOrderHistory = view.findViewById(R.id.text_myorder);
         profileAreaOrderHistoryLayout = view.findViewById(R.id.myorder_area);
-        profileAboutUs = view.findViewById(R.id.text_aboutus);
         profileAreaAboutUsLayout = view.findViewById(R.id.aboutus_area);
-        profileMap = view.findViewById(R.id.text_map);
-        profileAreaMapLayout = view.findViewById(R.id.map_area);
 
         if (account != null) {
             String personName = account.getDisplayName();
@@ -101,35 +92,21 @@ public class ProfileFragment extends Fragment {
             profileName.setText(personName);
             profileEmail.setText(personEmail);
             profileAreaLayout.setVisibility(View.VISIBLE);
-            profileAreaOrderHistoryLayout.setVisibility(View.VISIBLE);
-            profileOrderHistory.setVisibility(View.VISIBLE);
-            profileAreaAboutUsLayout.setVisibility(View.VISIBLE);
-            profileAboutUs.setVisibility(View.VISIBLE);
-            profileAreaMapLayout.setVisibility(View.VISIBLE);
-            profileMap.setVisibility(View.VISIBLE);
             buttonLogout.setVisibility(View.VISIBLE);
             buttonLogin.setVisibility(View.GONE);
             buttonRegister.setVisibility(View.GONE);
 
-            profileOrderHistory.setOnClickListener(v -> openOrderHistory(account.getId()));
+            profileAreaOrderHistoryLayout.setOnClickListener(v -> openOrderHistory(account.getId()));
         } else if (user != null) {
             // User logged in
             profileName.setText(user.getFullName());
             profileEmail.setText(user.getEmail());
-            //
             profileAreaLayout.setVisibility(View.VISIBLE);
-            profileAreaOrderHistoryLayout.setVisibility(View.VISIBLE);
-            profileOrderHistory.setVisibility(View.VISIBLE);
-            profileAreaAboutUsLayout.setVisibility(View.VISIBLE);
-            profileAboutUs.setVisibility(View.VISIBLE);
-            profileAreaMapLayout.setVisibility(View.VISIBLE);
-            profileMap.setVisibility(View.VISIBLE);
-            //
             buttonLogout.setVisibility(View.VISIBLE);
             buttonLogin.setVisibility(View.GONE);
             buttonRegister.setVisibility(View.GONE);
-            profileOrderHistory.setOnClickListener(v -> openOrderHistory(user.getUsername()));
 
+            profileAreaOrderHistoryLayout.setOnClickListener(v -> openOrderHistory(user.getUsername()));
         } else {
             // User not logged in
             profileAreaLayout.setVisibility(View.GONE);
@@ -141,9 +118,6 @@ public class ProfileFragment extends Fragment {
         buttonLogin.setOnClickListener(v -> login());
         buttonRegister.setOnClickListener(v -> register());
         buttonLogout.setOnClickListener(v -> logout());
-
-
-
 
         return view;
     }

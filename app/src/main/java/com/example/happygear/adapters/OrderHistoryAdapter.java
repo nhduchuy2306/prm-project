@@ -42,10 +42,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         if (order == null){
             return;
         }
+        String formattedNumber = String.valueOf(order.getTotal()).replaceAll("\\.0+$", "");
+
         holder.orderId.setText(order.getOrderId().toString());
         holder.orderDate.setText(order.getDate().toString());
         holder.orderStatus.setText(order.getStatus().toString());
-        holder.orderTotal.setText(order.getTotal().toString());
+        holder.orderTotal.setText("$"+formattedNumber);
     }
 
     @Override
