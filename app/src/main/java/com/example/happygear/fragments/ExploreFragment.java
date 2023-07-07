@@ -1,6 +1,7 @@
 package com.example.happygear.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,57 +44,37 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ExploreFragment extends Fragment implements ProductCardItemListener {
-
     private RecyclerView recyclerView;
     private ProducPaginationtAdapter productAdapter;
     private List<Product> mProductList;
-
     private List<Integer> listCategoryIds = new ArrayList<>();
-
     private List<Integer> listBrandIds = new ArrayList<>();
-
     private Double minPrice;
-
     private Double maxPrice;
-
     private ImageButton filterButton;
-
     BottomSheetDialog bottomSheetDialog;
-
     private RadioButton cbLaptop;
-
     private RadioButton cbMonitor;
-
     private RadioButton cbKeyboard;
-
     private RadioButton cbMouse;
-
     private RadioButton cbHeadphone;
-
     private RadioButton cbAcer;
-
     private RadioButton cbAsus;
-
     private RadioButton cbDell;
-
     private RadioButton cbHp;
-
     private RadioButton cbLogitech;
-
     private RadioButton cbCorsair;
-
     private EditText etMinPrice;
-
     private EditText etMaxPrice;
-
     private String search;
-
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int currentPage = 1;
     private int totalPage = 1;
-
     private AppDatabase db;
+    private EditText etSearch;
+    private ImageView btnSearch;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,11 +91,14 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
         filterButton = view.findViewById(R.id.btnFilter);
+        etSearch = view.findViewById(R.id.explore_search);
+        btnSearch = view.findViewById(R.id.explore_btn_search);
+        progressBar = view.findViewById(R.id.explore_progress_bar);
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            search = bundle.getString("search");
-        }
+        btnSearch.setOnClickListener(v -> {
+            search = etSearch.getText().toString();
+            setFirstData();
+        });
 
         recyclerView = view.findViewById(R.id.explore_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -339,6 +325,14 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
                                     isLastPage = true;
                                 }
                             }
+
+                            if (!etSearch.getText().toString().isEmpty()) {
+                                productAdapter.removeLoadingFooter();
+                            }
+                            progressBar.setVisibility(View.GONE);
+
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
                         }
                     }
 

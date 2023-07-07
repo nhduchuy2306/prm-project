@@ -22,6 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.happygear.R;
 import com.example.happygear.activities.ProductDetailActivity;
 import com.example.happygear.adapters.CategoryAdapter;
@@ -36,6 +39,7 @@ import com.example.happygear.services.ProductService;
 import com.example.happygear.utils.AppUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -57,8 +61,7 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
     private TextView tvBestSellingProducts;
     private TextView tvCategories;
     private ProgressBar progressBar;
-    private EditText etSearch;
-    private ImageView btnSearch;
+    private ImageSlider imageSlider;
     private AppDatabase db;
 
     @Override
@@ -71,7 +74,6 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
         }
     }
 
-
     @Nullable
     @Override
     public View onCreateView(
@@ -79,8 +81,6 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        Toolbar toolbar = view.findViewById(R.id.home_toolbar);
 
         tvCategories = view.findViewById(R.id.home_category_text);
         tvCategories.setVisibility(View.GONE);
@@ -91,25 +91,16 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
         progressBar = view.findViewById(R.id.home_progress_bar);
         progressBar.setVisibility(View.VISIBLE);
 
-        // Search
-        etSearch = view.findViewById(R.id.home_search);
-        btnSearch = view.findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String search = etSearch.getText().toString();
-                if (search.isEmpty()) {
-                    Toast.makeText(getContext(), "Please enter a search term", Toast.LENGTH_SHORT).show();
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("search", search);
-                    Fragment fragment = new ExploreFragment();
-                    fragment.setArguments(bundle);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.nav_main_fragment, fragment).commit();
-                }
-            }
-        });
+        imageSlider = view.findViewById(R.id.image_home_slider);
+
+        imageSlider.setImageList(new ArrayList<>(Arrays.asList(
+                new SlideModel(R.drawable.banner_1, ScaleTypes.FIT),
+                new SlideModel(R.drawable.banner_2, ScaleTypes.FIT),
+                new SlideModel(R.drawable.banner_3, ScaleTypes.FIT),
+                new SlideModel(R.drawable.banner_4, ScaleTypes.FIT),
+                new SlideModel(R.drawable.banner_5, ScaleTypes.FIT)
+        )));
+
         // Latest Products
         latestProductsRecyclerView = view.findViewById(R.id.home_latest_recycler_view);
         LinearLayoutManager latestProductLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);

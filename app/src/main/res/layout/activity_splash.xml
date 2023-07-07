@@ -10,16 +10,7 @@
 
     <ImageView
         android:id="@+id/splash_logo"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:src="@drawable/giphy" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/mobile_name"
-        android:textSize="50sp"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:src="@drawable/logo_splash" />
 </LinearLayout>

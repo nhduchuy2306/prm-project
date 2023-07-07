@@ -166,7 +166,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                             for (int i = 0; i < productPictures.size(); i++) {
                                 imageList.add(new SlideModel(
                                         productPictures.get(i).getPictureUrl(),
-                                        "",
                                         ScaleTypes.FIT));
                             }
                             imageSlider.setImageList(imageList);

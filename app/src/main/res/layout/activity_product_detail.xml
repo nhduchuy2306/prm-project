@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_product_detail_activity"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/gradient_screen"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:ignore="MissingConstraints"

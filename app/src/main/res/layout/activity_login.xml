@@ -27,12 +27,12 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="230dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="32dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/giphy" />
+            app:srcCompat="@drawable/logo_splash_screen" />
 
         <TextView
             android:layout_width="wrap_content"
