@@ -30,12 +30,16 @@
         android:layout_margin="10dp"
         android:background="@color/black" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_checkout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:scrollbars="vertical" />
+        android:layout_height="230dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:scrollbars="vertical" />
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -48,9 +52,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:text="Total :"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -58,7 +64,9 @@
 
         <TextView
             android:id="@+id/tv_total_checkout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="$1000"
@@ -74,6 +82,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="Checkout"
+        android:padding="20dp"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />

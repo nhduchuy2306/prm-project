@@ -40,8 +40,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.CheckO
         String formattedNumber = String.valueOf(checkoutDto.getPrice()).replaceAll("\\.0+$", "");
 
         holder.tvName.setText(checkoutDto.getName());
-        holder.tvPrice.setText("$"+formattedNumber);
-        holder.tvQuantity.setText(String.valueOf(checkoutDto.getQuantity()));
+        holder.tvPrice.setText("$" + formattedNumber);
+        holder.tvQuantity.setText("x" + checkoutDto.getQuantity());
     }
 
     @Override

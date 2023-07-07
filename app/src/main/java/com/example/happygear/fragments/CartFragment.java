@@ -186,6 +186,7 @@ public class CartFragment extends Fragment implements CartItemListener {
         checkOutAdapter = new CheckOutAdapter();
         Double total = 0.0;
 
+        checkoutDtoList.clear();
         for (CartDto cartDto : getCartDtoList()) {
             total += cartDto.getQuantity() * cartDto.getPrice();
             CheckoutDto checkoutDto = new CheckoutDto(
