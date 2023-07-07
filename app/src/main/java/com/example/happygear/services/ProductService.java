@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ProductService {
@@ -41,5 +42,6 @@ public interface ProductService {
                                          @Query("toPrice") Double toPrice,
                                          @Query("search") String search);
 
-
+    @GET("products/{productId}/addresses")
+    Call<Product> getProductAddressById(@Path("productId") int productId);
 }

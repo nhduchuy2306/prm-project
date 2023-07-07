@@ -32,7 +32,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         myMap = googleMap;
 
-        LatLng myStore = new LatLng(R.string.my_latitude, R.string.my_longtitude);
+        LatLng myStore = new LatLng(Double.parseDouble("10.809274889774631"), Double.parseDouble("106.61511036557137"));
         myMap.addMarker(new MarkerOptions().position(myStore).title("Happy Gear"));
         myMap.moveCamera(CameraUpdateFactory.newLatLng(myStore));
 

@@ -100,10 +100,29 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/detail_product_description_title"
+                android:id="@+id/detail_product_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/modify_cart_layout"
+                android:layout_marginTop="16dp"
+                android:textSize="20sp"
+                android:text="Address"
+                android:textColor="#000000"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_address"
+                android:layout_marginTop="16dp"
+                android:id="@+id/detail_product_address_recycler_view"
+                android:scrollbars="vertical"
+                tools:ignore="MissingConstraints"/>
+
+            <TextView
+                android:id="@+id/detail_product_description_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_address_recycler_view"
                 android:layout_marginTop="16dp"
                 android:text="Description"
                 android:textSize="20sp"

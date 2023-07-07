@@ -1,6 +1,7 @@
 package com.example.happygear.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Product implements Serializable {
     private Integer productId;
@@ -13,12 +14,14 @@ public class Product implements Serializable {
     private int brandId;
     private int categoryId;
 
+    private List<ShopAddress> shopAddresses;
+
     public Product() {
     }
 
     public Product(Integer productId, String productName, Double price, Integer quantity,
                    String insuranceInfo, String picture, Boolean status, int brandId,
-                   int categoryId) {
+                   int categoryId, List<ShopAddress> shopAddresses) {
         this.productId = productId;
         this.productName = productName;
         this.price = price;
@@ -28,6 +31,15 @@ public class Product implements Serializable {
         this.status = status;
         this.brandId = brandId;
         this.categoryId = categoryId;
+        this.shopAddresses = shopAddresses;
+    }
+
+    public List<ShopAddress> getShopAddresses() {
+        return shopAddresses;
+    }
+
+    public void setShopAddresses(List<ShopAddress> shopAddresses) {
+        this.shopAddresses = shopAddresses;
     }
 
     public Integer getProductId() {

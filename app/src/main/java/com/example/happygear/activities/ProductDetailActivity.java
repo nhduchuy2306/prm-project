@@ -1,10 +1,12 @@
 package com.example.happygear.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,15 +19,19 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.happygear.R;
+import com.example.happygear.adapters.AddressAdapter;
 import com.example.happygear.adapters.ProductDescriptionAdapter;
 import com.example.happygear.databases.AppDatabase;
 import com.example.happygear.dto.CartDto;
 import com.example.happygear.dto.DescriptionDto;
+import com.example.happygear.interfaces.AddressListener;
 import com.example.happygear.models.Product;
 import com.example.happygear.models.ProductDescription;
 import com.example.happygear.models.ProductPicture;
+import com.example.happygear.models.ShopAddress;
 import com.example.happygear.services.ProductDescriptionService;
 import com.example.happygear.services.ProductPictureService;
+import com.example.happygear.services.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends AppCompatActivity implements AddressListener {
 
     private Product product;
     private List<SlideModel> imageList;
@@ -44,16 +50,14 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView quantityTextView;
     private TextView productName;
     private Button addToCartButton;
-
     private RecyclerView recyclerView;
-
+    private RecyclerView addressRecyclerView;
+    private List<ShopAddress> shopAddressList;
+    private AddressAdapter addressAdapter;
     private List<DescriptionDto> descriptionDtoList;
-
     private ProductDescription productDescription;
-
     private ProductDescriptionAdapter productDescriptionAdapter;
     private int quantity;
-
     private AppDatabase db;
 
     @Override
@@ -87,6 +91,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         productName.setText(product.getProductName());
+
+        addressRecyclerView = findViewById(R.id.detail_product_address_recycler_view);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.VERTICAL, false);
+        addressRecyclerView.setLayoutManager(linearLayoutManager2);
+        addressAdapter = new AddressAdapter(this);
+        loadShopAddress();
 
         decreaseButton.setOnClickListener(v -> setDecreaseButton());
         increaseButton.setOnClickListener(v -> setIncreaseButton());
@@ -198,5 +208,30 @@ public class ProductDetailActivity extends AppCompatActivity {
                         Log.d("ProductDetailActivity", "onFailure: " + t.getMessage());
                     }
                 });
+    }
+
+    private void loadShopAddress() {
+        ProductService.productService.getProductAddressById(product.getProductId()).enqueue(new Callback<Product>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                if (response.isSuccessful()) {
+                    shopAddressList = response.body().getShopAddresses();
+                    addressAdapter.setData(shopAddressList);
+                    addressAdapter.notifyDataSetChanged();
+                    addressRecyclerView.setAdapter(addressAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onAddressClick(ShopAddress shopAddress) {
+        Toast.makeText(this, "Location" + shopAddress.getLatitude() +" : " + shopAddress.getLatitude(), Toast.LENGTH_SHORT).show();
     }
 }
