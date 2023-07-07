@@ -57,7 +57,6 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_weight="0.8"
-            android:autofillHints=""
             android:background="@drawable/input_border"
             android:gravity="center"
             android:hint="@string/find_your_product"

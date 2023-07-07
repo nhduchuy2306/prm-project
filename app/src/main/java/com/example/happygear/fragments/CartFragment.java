@@ -140,6 +140,8 @@ public class CartFragment extends Fragment implements CartItemListener {
             db.cartDao().delete(cartDto.getProductId());
         }).start();
         cartAdapter.notifyDataSetChanged();
+
+        Toast.makeText(getContext(), "Remove from cart", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressLint("NotifyDataSetChanged")

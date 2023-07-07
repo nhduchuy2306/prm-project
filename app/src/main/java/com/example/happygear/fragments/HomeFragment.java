@@ -231,5 +231,7 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
         new Thread(() -> {
             db.cartDao().insert(cartDto);
         }).start();
+
+        Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
     }
 }

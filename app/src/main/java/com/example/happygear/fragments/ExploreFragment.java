@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -411,5 +412,7 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
         new Thread(() -> {
             db.cartDao().insert(cartDto);
         }).start();
+
+        Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
     }
 }

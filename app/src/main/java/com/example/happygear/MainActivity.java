@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.happygear.fragments.CartFragment;
-import com.example.happygear.fragments.ChatFragment;
 import com.example.happygear.fragments.ExploreFragment;
 import com.example.happygear.fragments.HomeFragment;
 import com.example.happygear.fragments.ProfileFragment;
