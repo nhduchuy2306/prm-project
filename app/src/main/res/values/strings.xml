@@ -34,6 +34,9 @@
     <string name="channel_description">This is Channel 1</string>
     <string name="channel_id">1</string>
 
+    <string name="my_map_api_key">AIzaSyB7An3a8JrBjY68ggkW2GxXKxJndg_-vMg</string>
+    <string name="my_latitude">10.84132560734404 </string>
+    <string name="my_longtitude">106.80983897699154</string>
     <string-array name="gender">
         <item>Choose gender...</item>
         <item>Male</item>

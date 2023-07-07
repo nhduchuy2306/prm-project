@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.activities.LoginActivity;
+import com.example.happygear.activities.MapsActivity;
 import com.example.happygear.activities.OrderHistoryActivity;
 import com.example.happygear.activities.RegisterActivity;
 import com.example.happygear.models.User;
@@ -118,6 +119,7 @@ public class ProfileFragment extends Fragment {
         buttonLogin.setOnClickListener(v -> login());
         buttonRegister.setOnClickListener(v -> register());
         buttonLogout.setOnClickListener(v -> logout());
+        profileAreaAboutUsLayout.setOnClickListener(v -> openAboutUs());
 
         return view;
     }
@@ -135,6 +137,11 @@ public class ProfileFragment extends Fragment {
     private void openOrderHistory(String username){
         Intent intent = new Intent(getContext(), OrderHistoryActivity.class);
         intent.putExtra("username", username);
+        startActivity(intent);
+    }
+
+    private void openAboutUs(){
+        Intent intent = new Intent(getContext(), MapsActivity.class);
         startActivity(intent);
     }
 
