@@ -1,8 +1,13 @@
 package com.example.happygear.fragments;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,9 +41,9 @@ import com.example.happygear.utils.SwipeUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.gson.stream.JsonReader;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -167,7 +173,7 @@ public class CartFragment extends Fragment implements CartItemListener {
         cartAdapter.notifyDataSetChanged();
     }
 
-    private void checkOutPopUp(){
+    private void checkOutPopUp() {
         View dialogView = getLayoutInflater().inflate(R.layout.bottom_checkout, null);
 
         checkoutTotal = dialogView.findViewById(R.id.tv_total_checkout);
@@ -193,7 +199,7 @@ public class CartFragment extends Fragment implements CartItemListener {
         checkOutAdapter.setDataCheckout(checkoutDtoList);
         checkoutRecyclerView.setAdapter(checkOutAdapter);
         String formattedNumber = String.valueOf(total).replaceAll("\\.0+$", "");
-        checkoutTotal.setText("$"+formattedNumber);
+        checkoutTotal.setText("$" + formattedNumber);
 
         checkoutProcessButton.setOnClickListener(v -> checkOut());
 
@@ -209,7 +215,7 @@ public class CartFragment extends Fragment implements CartItemListener {
             username = user.getUsername();
         }
 
-        if(username.equals("")){
+        if (username.equals("")) {
             Toast.makeText(requireContext(), "Please login to continue", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -222,7 +228,7 @@ public class CartFragment extends Fragment implements CartItemListener {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     String orderId = response.body();
                     Log.d("CartFragment", orderId);
                     Log.d("CartFragment", "Order created successfully");
@@ -231,6 +237,7 @@ public class CartFragment extends Fragment implements CartItemListener {
                     new Thread(() -> {
                         db.cartDao().clearCart();
                     }).start();
+                    sendSuccessOrderNotification();
                     cartEmptyTextView.setVisibility(View.VISIBLE);
                     checkoutButton.setVisibility(View.GONE);
                     checkoutDtoList.clear();
@@ -245,5 +252,26 @@ public class CartFragment extends Fragment implements CartItemListener {
                 Log.e("CartFragment", t.getMessage());
             }
         });
+    }
+
+    private void sendSuccessOrderNotification() {
+        Notification notification = new NotificationCompat.Builder(requireContext(), getString(R.string.channel_id))
+                .setContentTitle("Order created successfully")
+                .setContentText("Your order has been created successfully")
+                .setSmallIcon(R.drawable.giphy)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.giphy))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) requireContext().getSystemService(NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(randomId(), notification);
+        }
+    }
+
+    private int randomId() {
+        Date date = new Date();
+        return (int) date.getTime();
     }
 }

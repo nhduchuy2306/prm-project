@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,7 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
     private EditText etSearch;
     private ImageView btnSearch;
     private ProgressBar progressBar;
+    private TextView tvNoData;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,9 +97,11 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
         etSearch = view.findViewById(R.id.explore_search);
         btnSearch = view.findViewById(R.id.explore_btn_search);
         progressBar = view.findViewById(R.id.explore_progress_bar);
+        tvNoData = view.findViewById(R.id.explore_tv_no_data);
 
         btnSearch.setOnClickListener(v -> {
             search = etSearch.getText().toString();
+            progressBar.setVisibility(View.VISIBLE);
             setFirstData();
         });
 
@@ -312,28 +316,37 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
         ProductService.productService
                 .getProductsFilter(1, 8, listCategoryIds, listBrandIds, minPrice, maxPrice, search)
                 .enqueue(new Callback<ProductModel>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                         if (response.isSuccessful()) {
                             ProductModel productModel = response.body();
                             if (productModel != null) {
-                                mProductList = productModel.getData();
-                                totalPage = productModel.getSize();
-                                productAdapter.setProductList(mProductList);
-                                if (currentPage < totalPage) {
-                                    productAdapter.addLoadingFooter();
+                                if (productModel.getData().isEmpty()) {
+                                    productAdapter.setProductList(new ArrayList<>());
+                                    tvNoData.setVisibility(View.VISIBLE);
                                 } else {
-                                    isLastPage = true;
+                                    mProductList = productModel.getData();
+                                    totalPage = productModel.getSize();
+                                    Log.d("ExploreFragment", "onResponse: " + totalPage);
+                                    Log.d("ExploreFragment", "onResponse: " + currentPage);
+                                    Log.d("ExploreFragment", "onResponse Size: " + mProductList.size());
+                                    tvNoData.setVisibility(View.GONE);
+                                    productAdapter.setProductList(mProductList);
+                                    productAdapter.notifyDataSetChanged();
+                                    if (currentPage < totalPage) {
+                                        productAdapter.addLoadingFooter();
+                                    } else {
+                                        isLastPage = true;
+                                    }
                                 }
                             }
 
                             if (!etSearch.getText().toString().isEmpty()) {
-                                productAdapter.removeLoadingFooter();
+                                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
                             }
                             progressBar.setVisibility(View.GONE);
-
-                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
                         }
                     }
 
