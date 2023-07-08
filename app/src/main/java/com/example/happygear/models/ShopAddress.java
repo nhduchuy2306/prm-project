@@ -1,6 +1,8 @@
 package com.example.happygear.models;
 
-public class ShopAddress {
+import java.io.Serializable;
+
+public class ShopAddress implements Serializable {
     private Integer shopAddressId;
     private String address;
     private String longitude;

@@ -1,6 +1,7 @@
 package com.example.happygear.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import com.example.happygear.services.ProductDescriptionService;
 import com.example.happygear.services.ProductPictureService;
 import com.example.happygear.services.ProductService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +99,7 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
         addressRecyclerView.setLayoutManager(linearLayoutManager2);
         addressAdapter = new AddressAdapter(this);
         loadShopAddress();
+
 
         decreaseButton.setOnClickListener(v -> setDecreaseButton());
         increaseButton.setOnClickListener(v -> setIncreaseButton());
@@ -225,13 +228,15 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
-
+                Log.d("ProductDetailActivity", "onFailure: " + t.getMessage());
             }
         });
     }
 
     @Override
     public void onAddressClick(ShopAddress shopAddress) {
-        Toast.makeText(this, "Location" + shopAddress.getLatitude() +" : " + shopAddress.getLatitude(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ProductDetailActivity.this, MapsActivity.class);
+        intent.putExtra("shopAddress", shopAddress);
+        startActivity(intent);
     }
 }
