@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.happygear.MainActivity;
 import com.example.happygear.R;
+import com.example.happygear.activities.AboutActivity;
 import com.example.happygear.activities.LoginActivity;
 import com.example.happygear.activities.MapsActivity;
 import com.example.happygear.activities.OrderHistoryActivity;
@@ -142,13 +143,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void openAboutUs(){
-        Intent intent = new Intent(getContext(), MapsActivity.class);
-        ShopAddress shopAddress = new ShopAddress();
-        shopAddress.setAddress("Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh 700000, Vietnam");
-        shopAddress.setLongitude("106.81030142082551");
-        shopAddress.setLatitude("10.841306724264257");
-        shopAddress.setShopAddressId(1);
-        intent.putExtra("shopAddress", shopAddress);
+        Intent intent = new Intent(requireContext(), AboutActivity.class);
         startActivity(intent);
     }
 

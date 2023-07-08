@@ -41,4 +41,11 @@
         <item>Female</item>
         <item>Other</item>
     </string-array>
+
+    <string name="text_about_us">
+        Welcome to Happy Gear, your number one source for all things about Gear. We\'re dedicated to giving you the very best of Gear, with a focus on Quality, People and Service.
+        Founded in 2022 by H&amp;M, Happy Gear has come a long way from its beginnings in Viet Nam. When H&amp;M first started out, Their passion for "eco-friendly cleaning products" drove them to enjoy their computer so that Happy Gear can offer you competitive differentiator. We now serve customers all over [place - town, country, the world], and are thrilled that we\'re able to turn our passion into our own website.
+        I hope you enjoy our products as much as I enjoy offering them to you. If you have any questions or comments, please don\'t hesitate to contact me.
+        Sincerely,
+    </string>
 </resources>

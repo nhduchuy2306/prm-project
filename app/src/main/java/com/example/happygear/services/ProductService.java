@@ -2,6 +2,7 @@ package com.example.happygear.services;
 
 import com.example.happygear.models.Product;
 import com.example.happygear.models.ProductModel;
+import com.example.happygear.models.ShopAddress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,4 +45,7 @@ public interface ProductService {
 
     @GET("products/{productId}/addresses")
     Call<Product> getProductAddressById(@Path("productId") int productId);
+
+    @GET("shopaddress")
+    Call<List<ShopAddress>> getShopAddress();
 }
