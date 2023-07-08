@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.activities.ProductDetailActivity;
 import com.example.happygear.adapters.ProducPaginationtAdapter;
@@ -424,6 +425,9 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
 
         new Thread(() -> {
             db.cartDao().insert(cartDto);
+            int size = db.cartDao().getCartCount();
+            MainActivity activity = (MainActivity) getActivity();
+            activity.updateCartBadge(size);
         }).start();
 
         Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();

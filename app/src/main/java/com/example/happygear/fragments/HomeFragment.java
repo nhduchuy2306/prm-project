@@ -6,18 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -25,6 +20,7 @@ import androidx.room.Room;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.activities.ProductDetailActivity;
 import com.example.happygear.adapters.CategoryAdapter;
@@ -76,10 +72,7 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
 
     @Nullable
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         tvCategories = view.findViewById(R.id.home_category_text);
@@ -93,13 +86,7 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
 
         imageSlider = view.findViewById(R.id.image_home_slider);
 
-        imageSlider.setImageList(new ArrayList<>(Arrays.asList(
-                new SlideModel(R.drawable.banner_1, ScaleTypes.FIT),
-                new SlideModel(R.drawable.banner_2, ScaleTypes.FIT),
-                new SlideModel(R.drawable.banner_3, ScaleTypes.FIT),
-                new SlideModel(R.drawable.banner_4, ScaleTypes.FIT),
-                new SlideModel(R.drawable.banner_5, ScaleTypes.FIT)
-        )));
+        imageSlider.setImageList(new ArrayList<>(Arrays.asList(new SlideModel(R.drawable.banner_1, ScaleTypes.FIT), new SlideModel(R.drawable.banner_2, ScaleTypes.FIT), new SlideModel(R.drawable.banner_3, ScaleTypes.FIT), new SlideModel(R.drawable.banner_4, ScaleTypes.FIT), new SlideModel(R.drawable.banner_5, ScaleTypes.FIT))));
 
         // Latest Products
         latestProductsRecyclerView = view.findViewById(R.id.home_latest_recycler_view);
@@ -230,6 +217,9 @@ public class HomeFragment extends Fragment implements ProductCardItemListener {
 
         new Thread(() -> {
             db.cartDao().insert(cartDto);
+            int size = db.cartDao().getCartCount();
+            MainActivity activity = (MainActivity) getActivity();
+            activity.updateCartBadge(size);
         }).start();
 
         Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();

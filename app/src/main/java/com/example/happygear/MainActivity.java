@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.example.happygear.fragments.CartFragment;
 import com.example.happygear.fragments.ExploreFragment;
 import com.example.happygear.fragments.HomeFragment;
 import com.example.happygear.fragments.ProfileFragment;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = Room.databaseBuilder(this, AppDatabase.class, "cart.db").allowMainThreadQueries().build();
 
         mBottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -60,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        db = Room.databaseBuilder(this, AppDatabase.class, "cart.db").allowMainThreadQueries().build();
+        new Handler(this.getMainLooper()).postDelayed(() -> {
+            int size = db.cartDao().getCartCount();
+            updateCartBadge(size);
+        }, 1000);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
@@ -84,6 +91,22 @@ public class MainActivity extends AppCompatActivity {
                 sendNotification();
             }
         }).start();
+    }
+
+    public void updateCartBadge(int cartSize) {
+        BottomNavigationView mBottomNavigationView = findViewById(R.id.bottom_navigation);
+        BadgeDrawable badgeDrawable = mBottomNavigationView.getOrCreateBadge(R.id.navigation_cart);
+
+        if (cartSize > 0) {
+            badgeDrawable.setVisible(true);
+            badgeDrawable.setVerticalOffset(20);
+            badgeDrawable.setNumber(cartSize);
+            badgeDrawable.setBadgeTextColor(getResources().getColor(R.color.white));
+            badgeDrawable.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            badgeDrawable.setVisible(false);
+            badgeDrawable.clearNumber();
+        }
     }
 
     private void replaceFragment(Fragment fragment) {

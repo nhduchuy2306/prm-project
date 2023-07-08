@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.adapters.CartAdapter;
 import com.example.happygear.adapters.CheckOutAdapter;
@@ -144,6 +145,9 @@ public class CartFragment extends Fragment implements CartItemListener {
         }
         new Thread(() -> {
             db.cartDao().delete(cartDto.getProductId());
+            int size = db.cartDao().getCartCount();
+            MainActivity activity = (MainActivity) getActivity();
+            activity.updateCartBadge(size);
         }).start();
         cartAdapter.notifyDataSetChanged();
 
@@ -237,6 +241,9 @@ public class CartFragment extends Fragment implements CartItemListener {
                     cartAdapter.notifyDataSetChanged();
                     new Thread(() -> {
                         db.cartDao().clearCart();
+                        int size = db.cartDao().getCartCount();
+                        MainActivity activity = (MainActivity) getActivity();
+                        activity.updateCartBadge(size);
                     }).start();
                     sendSuccessOrderNotification();
                     cartEmptyTextView.setVisibility(View.VISIBLE);
