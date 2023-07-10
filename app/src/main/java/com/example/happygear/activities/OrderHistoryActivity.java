@@ -3,6 +3,7 @@ package com.example.happygear.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.adapters.OrderHistoryAdapter;
 import com.example.happygear.databases.AppDatabase;
@@ -74,6 +76,12 @@ public class OrderHistoryActivity extends AppCompatActivity implements OrderHist
         });
     }
 
+    private void updateCartInMainActivity(int cartSize) {
+        Intent intent = new Intent(MainActivity.ACTION_UPDATE_CART_BADGE);
+        intent.putExtra("cartSize", cartSize);
+        sendBroadcast(intent);
+    }
+
     @Override
     public void onOrderHistoryClick(OrderDetailModel orderDetailModel) {
         CartDto existCart = db.cartDao().getCartItem(orderDetailModel.getProductId());
@@ -94,6 +102,13 @@ public class OrderHistoryActivity extends AppCompatActivity implements OrderHist
 
         new Thread(() -> {
             db.cartDao().insert(cartDto);
+        }).start();
+
+        Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+
+        new Thread(() -> {
+            int cartSize = db.cartDao().getCartCount();
+            updateCartInMainActivity(cartSize);
         }).start();
     }
 }

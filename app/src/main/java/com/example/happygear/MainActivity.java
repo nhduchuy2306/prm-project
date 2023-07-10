@@ -3,6 +3,10 @@ package com.example.happygear;
 import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -32,15 +36,28 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String ACTION_UPDATE_CART_BADGE = "com.example.happygear.ACTION_UPDATE_CART_BADGE";
     private BottomNavigationView mBottomNavigationView;
     private static final int REQUEST_PERMISSION_CODE = 10;
     private AppDatabase db;
+
+    private BroadcastReceiver cartBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null && intent.getAction().equals(ACTION_UPDATE_CART_BADGE)) {
+                int size = intent.getIntExtra("cartSize", 0);
+                updateCartBadge(size);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        IntentFilter intentFilter = new IntentFilter(ACTION_UPDATE_CART_BADGE);
+        registerReceiver(cartBroadcastReceiver, intentFilter);
 
         db = Room.databaseBuilder(this, AppDatabase.class, "cart.db").allowMainThreadQueries().build();
 
@@ -91,6 +108,13 @@ public class MainActivity extends AppCompatActivity {
                 sendNotification();
             }
         }).start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister the broadcast receiver
+        unregisterReceiver(cartBroadcastReceiver);
     }
 
     public void updateCartBadge(int cartSize) {
