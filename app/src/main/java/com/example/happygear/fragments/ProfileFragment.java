@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
@@ -41,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private LinearLayout profileAreaAboutUsLayout;
     private TextView profileName;
     private TextView profileEmail;
+    private ImageView profileImage;
     private Button buttonLogout;
     private Button buttonLogin;
     private Button buttonRegister;
@@ -85,12 +88,19 @@ public class ProfileFragment extends Fragment {
         buttonLogout = view.findViewById(R.id.logoutButton);
         profileName = view.findViewById(R.id.profile_name);
         profileEmail = view.findViewById(R.id.profile_email);
+        profileImage = view.findViewById(R.id.profile_image);
         profileAreaOrderHistoryLayout = view.findViewById(R.id.myorder_area);
         profileAreaAboutUsLayout = view.findViewById(R.id.aboutus_area);
+
 
         if (account != null) {
             String personName = account.getDisplayName();
             String personEmail = account.getEmail();
+
+            if(account.getPhotoUrl()!=null){
+                String personPhoto = account.getPhotoUrl().toString();
+                Picasso.get().load(personPhoto).into(profileImage);
+            }
 
             profileName.setText(personName);
             profileEmail.setText(personEmail);
