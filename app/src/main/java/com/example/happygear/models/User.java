@@ -12,9 +12,19 @@ public class User implements Serializable {
     private Boolean status;
     private Boolean gender;
 
+    private Integer role;
+
     public User() {}
 
-    public User(String email, String username, String fullName, String password, String address, String phoneNumber, Boolean status, Boolean gender) {
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public User(String email, String username, String fullName, String password, String address, String phoneNumber, Boolean status, Boolean gender, Integer role) {
         this.email = email;
         this.username = username;
         this.fullName = fullName;
@@ -23,6 +33,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.status = status;
         this.gender = gender;
+        this.role = role;
     }
 
     public String getEmail() {
