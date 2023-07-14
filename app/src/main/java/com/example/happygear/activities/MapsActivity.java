@@ -64,11 +64,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                MarkerOptions userMarker = new MarkerOptions().position(userLocation).title("Your Location")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-                myMap.addMarker(userMarker);
-                lineOptions.add(userLocation);
+                if(oke){
+                    userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                    MarkerOptions userMarker = new MarkerOptions().position(userLocation).title("Your Location")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                    myMap.addMarker(userMarker);
+                    lineOptions.add(userLocation);
+                }
             }
 
             @Override
