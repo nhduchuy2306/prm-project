@@ -64,7 +64,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                userLocation = new LatLng(10.786794039074282, 106.62472392173756);
+                userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 MarkerOptions userMarker = new MarkerOptions().position(userLocation).title("Your Location")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
                 myMap.addMarker(userMarker);
@@ -135,7 +135,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.shopAddress= (ShopAddress) getIntent().getSerializableExtra("shopAddress");
         this.myStore = new LatLng(Double.parseDouble(this.shopAddress.getLatitude()),
                 Double.parseDouble(this.shopAddress.getLongitude()));
-        MarkerOptions storeMarker = new MarkerOptions().position(myStore).title("Happy Gear," + this.shopAddress.getAddress());
+        MarkerOptions storeMarker = new MarkerOptions().position(myStore).title("Happy Gear, " + this.shopAddress.getAddress());
         myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myStore, 12));
         myMap.addMarker(storeMarker);
 //        return  myStore;
