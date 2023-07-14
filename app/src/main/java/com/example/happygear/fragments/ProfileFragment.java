@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.activities.AboutActivity;
+import com.example.happygear.activities.ChatActivity;
+import com.example.happygear.activities.ChatManagementActivity;
 import com.example.happygear.activities.LoginActivity;
 import com.example.happygear.activities.MapsActivity;
 import com.example.happygear.activities.OrderHistoryActivity;
@@ -41,8 +43,12 @@ public class ProfileFragment extends Fragment {
 
     private LinearLayout profileAreaOrderHistoryLayout;
     private LinearLayout profileAreaAboutUsLayout;
+
+    private LinearLayout profileAreaChatLayout;
+
     private TextView profileName;
     private TextView profileEmail;
+    private TextView profileChat;
     private ImageView profileImage;
     private Button buttonLogout;
     private Button buttonLogin;
@@ -89,8 +95,11 @@ public class ProfileFragment extends Fragment {
         profileName = view.findViewById(R.id.profile_name);
         profileEmail = view.findViewById(R.id.profile_email);
         profileImage = view.findViewById(R.id.profile_image);
+        profileChat = view.findViewById(R.id.text_chat);
         profileAreaOrderHistoryLayout = view.findViewById(R.id.myorder_area);
         profileAreaAboutUsLayout = view.findViewById(R.id.aboutus_area);
+        profileAreaChatLayout = view.findViewById(R.id.chat_area);
+
 
 
         if (account != null) {
@@ -106,20 +115,27 @@ public class ProfileFragment extends Fragment {
             profileEmail.setText(personEmail);
             profileAreaLayout.setVisibility(View.VISIBLE);
             buttonLogout.setVisibility(View.VISIBLE);
+            profileAreaChatLayout.setVisibility(View.VISIBLE);
+            profileChat.setVisibility(View.VISIBLE);
+
             buttonLogin.setVisibility(View.GONE);
             buttonRegister.setVisibility(View.GONE);
-
             profileAreaOrderHistoryLayout.setOnClickListener(v -> openOrderHistory(account.getId()));
+            profileAreaChatLayout.setOnClickListener(v -> openChat(account.getDisplayName(), user.getRoleId()));
         } else if (user != null) {
             // User logged in
             profileName.setText(user.getFullName());
             profileEmail.setText(user.getEmail());
             profileAreaLayout.setVisibility(View.VISIBLE);
             buttonLogout.setVisibility(View.VISIBLE);
+            profileAreaChatLayout.setVisibility(View.VISIBLE);
+            profileChat.setVisibility(View.VISIBLE);
+
             buttonLogin.setVisibility(View.GONE);
             buttonRegister.setVisibility(View.GONE);
 
             profileAreaOrderHistoryLayout.setOnClickListener(v -> openOrderHistory(user.getUsername()));
+            profileAreaChatLayout.setOnClickListener(v -> openChat(user.getUsername(), user.getRoleId()));
         } else {
             // User not logged in
             profileAreaLayout.setVisibility(View.GONE);
@@ -132,7 +148,6 @@ public class ProfileFragment extends Fragment {
         buttonRegister.setOnClickListener(v -> register());
         buttonLogout.setOnClickListener(v -> logout());
         profileAreaAboutUsLayout.setOnClickListener(v -> openAboutUs());
-
         return view;
     }
 
@@ -150,6 +165,19 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent(getContext(), OrderHistoryActivity.class);
         intent.putExtra("username", username);
         startActivity(intent);
+    }
+
+    private void openChat(String username, Integer role){
+        if(role == 1){
+            Intent intent = new Intent(requireContext(), ChatManagementActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(requireContext(), ChatActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
     }
 
     private void openAboutUs(){
