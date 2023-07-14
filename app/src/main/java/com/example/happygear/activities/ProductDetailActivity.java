@@ -19,6 +19,7 @@ import androidx.room.Room;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.happygear.MainActivity;
 import com.example.happygear.R;
 import com.example.happygear.adapters.AddressAdapter;
 import com.example.happygear.adapters.ProductDescriptionAdapter;
@@ -34,7 +35,6 @@ import com.example.happygear.services.ProductDescriptionService;
 import com.example.happygear.services.ProductPictureService;
 import com.example.happygear.services.ProductService;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +51,7 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
     private ImageView increaseButton;
     private TextView quantityTextView;
     private TextView productName;
+    private TextView productPrice;
     private Button addToCartButton;
     private RecyclerView recyclerView;
     private RecyclerView addressRecyclerView;
@@ -84,6 +85,7 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
         increaseButton = findViewById(R.id.detail_btn_increase);
         quantityTextView = findViewById(R.id.detail_product_quantity);
         productName = findViewById(R.id.detail_product_name);
+        productPrice = findViewById(R.id.detail_product_price);
         addToCartButton = findViewById(R.id.detail_btn_add_to_cart);
         recyclerView = findViewById(R.id.detail_product_recycler_view);
 
@@ -93,6 +95,8 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         productName.setText(product.getProductName());
+        String formattedNumber = String.valueOf(product.getPrice()).replaceAll("\\.0+$", "");
+        productPrice.setText("$" + formattedNumber);
 
         addressRecyclerView = findViewById(R.id.detail_product_address_recycler_view);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.VERTICAL, false);
@@ -158,7 +162,7 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
         }
         CartDto cartDto = new CartDto(
                 product.getProductId(),
-                quantity,
+                1,
                 product.getPrice(),
                 product.getProductName(),
                 product.getPicture()
@@ -166,6 +170,14 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
 
         new Thread(() -> {
             db.cartDao().insert(cartDto);
+        }).start();
+
+        Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+
+        new Thread(() -> {
+            int cartSize = db.cartDao().getCartCount();
+            Log.d("ProductDetailActivity", "setAddToCartButton: " + cartSize);
+            updateCartInMainActivity(cartSize);
         }).start();
     }
 
@@ -238,5 +250,11 @@ public class ProductDetailActivity extends AppCompatActivity implements AddressL
         Intent intent = new Intent(ProductDetailActivity.this, MapsActivity.class);
         intent.putExtra("shopAddress", shopAddress);
         startActivity(intent);
+    }
+
+    private void updateCartInMainActivity(int cartSize) {
+        Intent intent = new Intent(MainActivity.ACTION_UPDATE_CART_BADGE);
+        intent.putExtra("cartSize", cartSize);
+        sendBroadcast(intent);
     }
 }
