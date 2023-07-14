@@ -1,4 +1,4 @@
-package com.example.happygear.utils;
+package com.example.happygear.models.utils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;

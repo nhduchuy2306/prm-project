@@ -19,14 +19,17 @@ import com.example.happygear.R;
 import com.example.happygear.dto.GoogleAuthRequest;
 import com.example.happygear.dto.LoginRequest;
 import com.example.happygear.models.User;
+import com.example.happygear.models.utils.Constants;
 import com.example.happygear.services.UserService;
-import com.example.happygear.utils.SerializableObject;
+import com.example.happygear.models.utils.SerializableObject;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,7 +97,20 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("user", userSerialized);
                         editor.apply();
-
+//                        //insert to FireBase
+//                        FirebaseFirestore database = FirebaseFirestore.getInstance();
+//                        database.collection(Constants.KEY_COLLECTION_USERS)
+//                                .whereEqualTo(Constants.KEY_EMAIL, response.body().getEmail().toString())
+//                                .whereEqualTo(Constants.KEY_USERNAME, response.body().getUsername().toString())
+//                                .whereEqualTo(Constants.KEY_PASSWORD, response.body().getPassword().toString())
+//                                .whereEqualTo(Constants.KEY_ROLE, response.body().getRole().toString())
+//                                .get()
+//                                .addOnCompleteListener(task -> {
+//                                    if (task.isSuccessful() && task.getResult() != null
+//                                        && task.getResult().getDocumentChanges().size() > 0){
+//                                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+//                                    }
+//                                });
                         // Redirect to Main Activity
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -166,4 +182,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+//    private void addDataToFireStore(){
+//        FirebaseFirestore database = FirebaseFirestore.getInstance();
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("first_name", "Hieu");
+//        data.put("last_name", "Vuong" );
+//        database.collection("users")
+//                .add(data)
+//                .addOnSuccessListener(documentReference -> {
+//                    Toast.makeText(getApplicationContext(),"Data Inserted!", Toast.LENGTH_SHORT).show();
+//                })
+//                .addOnFailureListener(exception -> {
+//                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+//                });
+//    }
 }

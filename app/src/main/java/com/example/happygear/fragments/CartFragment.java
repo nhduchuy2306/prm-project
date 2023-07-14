@@ -25,7 +25,14 @@ import com.example.happygear.adapters.CartAdapter;
 import com.example.happygear.databases.AppDatabase;
 import com.example.happygear.dto.CartDto;
 import com.example.happygear.interfaces.CartItemListener;
-import com.example.happygear.utils.SwipeUtil;
+import com.example.happygear.models.utils.SwipeUtil;
+import com.example.happygear.models.User;
+import com.example.happygear.services.OrderService;
+import com.example.happygear.models.utils.SerializableObject;
+import com.example.happygear.models.utils.SwipeUtil;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
 

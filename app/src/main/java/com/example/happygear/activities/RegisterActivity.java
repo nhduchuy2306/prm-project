@@ -25,7 +25,7 @@ import com.example.happygear.dto.GoogleAuthRequest;
 import com.example.happygear.dto.RegisterRequest;
 import com.example.happygear.models.User;
 import com.example.happygear.services.UserService;
-import com.example.happygear.utils.SerializableObject;
+import com.example.happygear.models.utils.SerializableObject;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

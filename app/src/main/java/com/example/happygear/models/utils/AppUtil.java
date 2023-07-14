@@ -1,4 +1,4 @@
-package com.example.happygear.utils;
+package com.example.happygear.models.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

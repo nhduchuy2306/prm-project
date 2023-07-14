@@ -36,7 +36,7 @@ import com.example.happygear.interfaces.ProductCardItemListener;
 import com.example.happygear.models.Product;
 import com.example.happygear.models.ProductModel;
 import com.example.happygear.services.ProductService;
-import com.example.happygear.utils.PaginationScrollListener;
+import com.example.happygear.models.utils.PaginationScrollListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;

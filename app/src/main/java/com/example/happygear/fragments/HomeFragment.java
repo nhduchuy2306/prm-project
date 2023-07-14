@@ -32,7 +32,7 @@ import com.example.happygear.models.Category;
 import com.example.happygear.models.Product;
 import com.example.happygear.services.CategoryService;
 import com.example.happygear.services.ProductService;
-import com.example.happygear.utils.AppUtil;
+import com.example.happygear.models.utils.AppUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

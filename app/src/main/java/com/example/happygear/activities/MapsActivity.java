@@ -98,10 +98,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         addMarkShopAddress();
 
         //draw line
-//        lineOptions.add(myStore);
-//        Polyline polyline = googleMap.addPolyline(lineOptions);
-//        polyline.setWidth(4);
-//        polyline.setColor(R.color.black);
+        lineOptions.add(myStore);
+        Polyline polyline = googleMap.addPolyline(lineOptions);
+        polyline.setWidth(4);
+        polyline.setColor(R.color.black);
         //to zoom map
         myMap.getUiSettings().setZoomControlsEnabled(true);
         myMap.getUiSettings().setCompassEnabled(true);
