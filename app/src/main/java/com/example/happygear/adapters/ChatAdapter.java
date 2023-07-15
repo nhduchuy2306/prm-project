@@ -24,9 +24,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public static final int VIEW_TYPE_RECEIVED = 2;
     private ChatListener mChatListener;
 
-    public ChatAdapter(ChatListener mChatListener, List<ChatMessage> mChatMessages){
-        this.mChatMessages = mChatMessages;
+    public ChatAdapter(ChatListener mChatListener, String senderId){
         this.mChatListener = mChatListener;
+        this.senderId = senderId;
     }
 
     public void setData(List<ChatMessage> mChatMessages){
@@ -37,6 +37,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemCount() {
+        if(mChatMessages != null){
+            return mChatMessages.size();
+        }
         return 0;
     }
 
@@ -74,7 +77,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemViewType(int position) {
-        if(mChatMessages.get(position).senderId.equals(senderId)){
+        if(mChatMessages.get(position).senderId.equals(this.senderId)){
             return VIEW_TYPE_SENT;
         }
         else{

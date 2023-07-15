@@ -9,6 +9,10 @@ public class ChatMessage {
     public String dateTime;
     public Date dateObject;
 
+    public String conversionId;
+
+    public String conversionName;
+
     public String getSenderId() {
         return senderId;
     }
@@ -39,5 +43,29 @@ public class ChatMessage {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Date getDateObject() {
+        return dateObject;
+    }
+
+    public void setDateObject(Date dateObject) {
+        this.dateObject = dateObject;
+    }
+
+    public String getConversionId() {
+        return conversionId;
+    }
+
+    public void setConversionId(String conversionId) {
+        this.conversionId = conversionId;
+    }
+
+    public String getConversionName() {
+        return conversionName;
+    }
+
+    public void setConversionName(String conversionName) {
+        this.conversionName = conversionName;
     }
 }
