@@ -1,13 +1,17 @@
 package com.example.happygear.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +27,10 @@ import com.example.happygear.models.User;
 import com.example.happygear.services.UserService;
 import com.example.happygear.utils.Constants;
 import com.example.happygear.utils.SerializableObject;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -57,6 +64,11 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
 
     private ProgressBar progressBar;
 
+    private TextView textNameChat;
+
+    private String conversionId = null;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +78,7 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
         listenMessage();
         layoutSend.setOnClickListener(v -> sendMessage());
 
-
+        checkKeyboard();
         AppCompatImageView back = findViewById(R.id.imgBack);
         back.setOnClickListener(v -> onBackPressed());
     }
@@ -77,6 +89,7 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
             layoutSend = findViewById(R.id.layoutSend);
             progressBar = findViewById(R.id.progressBar);
             chatRecyclerView = findViewById(R.id.chatRecyclerView);
+            textNameChat = findViewById(R.id.textName_Chat);
             database = FirebaseFirestore.getInstance();
 
             //get sender
@@ -92,6 +105,13 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
                     receiver.setEmail("admin@gmail.com");
                     receiver.setStatus(true);
                     receiver.setRoleId(1);
+                }else{
+                    sharedPreferences = this.getSharedPreferences("Receiver", Context.MODE_PRIVATE);
+                    String receiverSerialized = sharedPreferences.getString("receiver", null);
+                    if(receiverSerialized != null){
+                        receiver = (User) SerializableObject.deserializeObject(receiverSerialized);
+                        textNameChat.setText(receiver.getUsername());
+                    }
                 }
             }
 
@@ -129,6 +149,7 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
         });
     }
 
+
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
         message.put(Constants.KEY_SENDER_ID, user.getUsername());
@@ -136,7 +157,18 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
         message.put(Constants.KEY_MESSAGE, inputMessage.getText().toString());
         message.put(Constants.KEY_TIMESTAMP, new Date());
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
-
+        if (conversionId != null){
+            updateConversion(inputMessage.getText().toString());
+        }
+        else{
+            HashMap<String, Object> conversion = new HashMap<>();
+            conversion.put(Constants.KEY_SENDER_ID, user.getUsername());
+            conversion.put(Constants.KEY_RECEIVER_ID, receiver.getUsername());
+            conversion.put(Constants.KEY_SENDER_ID, user.getUsername());
+            conversion.put(Constants.KEY_LAST_MESSAGE, inputMessage.getText().toString());
+            conversion.put(Constants.KEY_TIMESTAMP, new Date());
+            addConversion(conversion);
+        }
         inputMessage.setText(null);
     }
 
@@ -182,11 +214,68 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
             chatRecyclerView.setVisibility(View.VISIBLE);
         }
         progressBar.setVisibility(View.GONE);
+
+        if(conversionId == null){
+            checkForConversion();
+        }
     });
 
     private String getReadableDateTime(Date date) {
         return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
     }
 
+    private void addConversion(HashMap<String, Object> conversion){
+        database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                .add(conversion)
+                .addOnSuccessListener(documentReference -> conversionId = documentReference.getId());
+    }
 
+    private void updateConversion(String message){
+        DocumentReference documentReference = database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                .document(conversionId);
+        documentReference.update(Constants.KEY_LAST_MESSAGE, message, Constants.KEY_TIMESTAMP, new Date());
+    }
+    private void checkForConversion(){
+        if(mChatMessages.size() != 0){
+            checkForConversionRemotely( user.getUsername(), receiver.getUsername() );
+            checkForConversionRemotely(receiver.getUsername(), user.getUsername());
+        }
+    }
+
+    private void checkForConversionRemotely(String senderId, String receiverId){
+        database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                .whereEqualTo(Constants.KEY_SENDER_ID, senderId)
+                .whereEqualTo(Constants.KEY_RECEIVER_ID, receiverId)
+                .get()
+                .addOnCompleteListener(conversionOnCompleteListener);
+    }
+
+    private final OnCompleteListener<QuerySnapshot> conversionOnCompleteListener = task -> {
+    if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0){
+        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+        conversionId = documentSnapshot.getId();
+    }
+    };
+
+
+    private void checkKeyboard(){
+        final View chatRoot = findViewById(R.id.chatRoot);
+        chatRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+
+                //r will be populated with the coordinates of your view that area still visible
+                chatRoot.getWindowVisibleDisplayFrame(r);
+
+                int heightDiff = chatRoot.getRootView().getHeight() - r.height();
+                if(heightDiff > 0.25*chatRoot.getRootView().getHeight()){
+                    if (mChatMessages.size() > 0){
+                        chatRecyclerView.scrollToPosition(mChatMessages.size() - 1);
+                        chatRoot.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                }
+            }
+        });
+    }
 }
