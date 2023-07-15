@@ -12,9 +12,13 @@ public class User implements Serializable {
     private Boolean status;
     private Boolean gender;
 
+    private Integer roleId;
+
     public User() {}
 
-    public User(String email, String username, String fullName, String password, String address, String phoneNumber, Boolean status, Boolean gender) {
+
+
+    public User(String email, String username, String fullName, String password, String address, String phoneNumber, Boolean status, Boolean gender, Integer roleId) {
         this.email = email;
         this.username = username;
         this.fullName = fullName;
@@ -23,6 +27,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.status = status;
         this.gender = gender;
+        this.roleId = roleId;
     }
 
     public String getEmail() {
@@ -87,5 +92,13 @@ public class User implements Serializable {
 
     public void setGender(Boolean gender) {
         this.gender = gender;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }

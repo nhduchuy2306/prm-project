@@ -48,4 +48,8 @@
         I hope you enjoy our products as much as I enjoy offering them to you. If you have any questions or comments, please don\'t hesitate to contact me.
         Sincerely,
     </string>
+
+    <string name="type_a_message">
+        Type a message
+    </string>
 </resources>

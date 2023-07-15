@@ -36,8 +36,8 @@ public interface UserService {
 
     @POST("users/login")
     Call<User> login(@Body LoginRequest loginRequest);
-    @GET("users")
-    Call<User> getUserByUsername(@Field("username") String username);
+    @GET("users/{username}")
+    Call<User> getUserByUsername(@Path("username") String username);
     @POST("users/google/auth")
     Call<User> registerWithGoogle(@Body GoogleAuthRequest googleAuthRequest);
     @POST("users/register")
