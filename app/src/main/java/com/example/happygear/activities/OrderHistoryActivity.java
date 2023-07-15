@@ -104,7 +104,7 @@ public class OrderHistoryActivity extends AppCompatActivity implements OrderHist
             db.cartDao().insert(cartDto);
         }).start();
 
-        Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+        Toast.makeText(OrderHistoryActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
 
         new Thread(() -> {
             int cartSize = db.cartDao().getCartCount();
