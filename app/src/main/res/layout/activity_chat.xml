@@ -124,7 +124,7 @@
             android:layout_marginLeft="@dimen/_4sdp"
             android:padding="@dimen/_8sdp"
             android:src="@drawable/ic_send"
-            app:tint="@color/white" />
+            app:tint="@color/primary_dark_chat" />
 
 
     </FrameLayout>
@@ -145,7 +145,7 @@
         android:inputType="text"
         android:paddingStart="@dimen/_16sdp"
         android:paddingEnd="@dimen/_16sdp"
-        android:textColor="@color/white"
+        android:textColor="@color/primary_dark_chat"
         android:textColorHint="@color/second_text_chat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layoutSend"
