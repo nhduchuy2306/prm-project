@@ -77,6 +77,8 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
     private AppDatabase db;
     private EditText etSearch;
     private ImageView btnSearch;
+
+    private int categoryId;
     private ProgressBar progressBar;
     private TextView tvNoData;
 
@@ -139,11 +141,17 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
     }
 
     private void setListIds() {
-        listCategoryIds.add(1);
-        listCategoryIds.add(2);
-        listCategoryIds.add(3);
-        listCategoryIds.add(4);
-        listCategoryIds.add(5);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            categoryId = bundle.getInt("categoryId");
+            listCategoryIds.add(categoryId);
+        }else{
+            listCategoryIds.add(1);
+            listCategoryIds.add(2);
+            listCategoryIds.add(3);
+            listCategoryIds.add(4);
+            listCategoryIds.add(5);
+        }
         listBrandIds.add(1);
         listBrandIds.add(2);
         listBrandIds.add(3);
@@ -313,7 +321,7 @@ public class ExploreFragment extends Fragment implements ProductCardItemListener
     }
 
     private void setFirstData() {
-
+        Log.d("list cate:", listCategoryIds.get(0).toString());
         ProductService.productService
                 .getProductsFilter(1, 8, listCategoryIds, listBrandIds, minPrice, maxPrice, search)
                 .enqueue(new Callback<ProductModel>() {

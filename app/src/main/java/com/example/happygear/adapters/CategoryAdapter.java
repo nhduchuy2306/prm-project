@@ -2,6 +2,7 @@ package com.example.happygear.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.happygear.R;
+import com.example.happygear.fragments.ExploreFragment;
 import com.example.happygear.models.Category;
 import com.squareup.picasso.Picasso;
 
@@ -58,6 +63,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Categr
             @Override
             public void onClick(View v) {
                 Log.d("CategoryAdapter", "onClick: " + category.getCategoryName());
+                Bundle bundle = new Bundle();
+                bundle.putInt("categoryId", category.getCategoryId());
+                Fragment fragment = new ExploreFragment();
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = ((FragmentActivity) mContext).getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.nav_main_fragment, fragment).commit();
             }
         });
     }
