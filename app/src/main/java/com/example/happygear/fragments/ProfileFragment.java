@@ -121,7 +121,7 @@ public class ProfileFragment extends Fragment {
             buttonLogin.setVisibility(View.GONE);
             buttonRegister.setVisibility(View.GONE);
             profileAreaOrderHistoryLayout.setOnClickListener(v -> openOrderHistory(account.getId()));
-            profileAreaChatLayout.setOnClickListener(v -> openChat(account.getDisplayName(), user.getRoleId()));
+            profileAreaChatLayout.setOnClickListener(v -> openChat(account.getDisplayName(), 2));
         } else if (user != null) {
             // User logged in
             profileName.setText(user.getFullName());
