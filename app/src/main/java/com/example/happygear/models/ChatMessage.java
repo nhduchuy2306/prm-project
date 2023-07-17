@@ -4,7 +4,11 @@ import java.util.Date;
 
 public class ChatMessage {
     public String senderId;
+
+    public String senderName;
     public String receiverId;
+
+    public String receiverName;
     public String message;
     public String dateTime;
     public Date dateObject;
@@ -67,5 +71,21 @@ public class ChatMessage {
 
     public void setConversionName(String conversionName) {
         this.conversionName = conversionName;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 }
