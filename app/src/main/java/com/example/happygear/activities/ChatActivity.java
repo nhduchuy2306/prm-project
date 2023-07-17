@@ -161,8 +161,11 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
 
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
+
         message.put(Constants.KEY_SENDER_ID, user.getUsername());
+        message.put(Constants.KEY_SENDER_NAME, user.getFullName());
         message.put(Constants.KEY_RECEIVER_ID, receiver.getUsername());
+        message.put(Constants.KEY_RECEIVER_NAME, receiver.getFullName());
         message.put(Constants.KEY_MESSAGE, inputMessage.getText().toString());
         message.put(Constants.KEY_TIMESTAMP, new Date());
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
@@ -172,7 +175,9 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
         else{
             HashMap<String, Object> conversion = new HashMap<>();
             conversion.put(Constants.KEY_SENDER_ID, user.getUsername());
+            conversion.put(Constants.KEY_SENDER_NAME, user.getFullName());
             conversion.put(Constants.KEY_RECEIVER_ID, receiver.getUsername());
+            conversion.put(Constants.KEY_RECEIVER_NAME, receiver.getFullName());
             conversion.put(Constants.KEY_SENDER_ID, user.getUsername());
             conversion.put(Constants.KEY_LAST_MESSAGE, inputMessage.getText().toString());
             conversion.put(Constants.KEY_TIMESTAMP, new Date());
@@ -203,7 +208,9 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
                 if (documentChange.getType() == DocumentChange.Type.ADDED) {
                     ChatMessage chatMessage = new ChatMessage();
                     chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
+                    chatMessage.senderName = documentChange.getDocument().getString(Constants.KEY_SENDER_NAME);
                     chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
+                    chatMessage.receiverName = documentChange.getDocument().getString(Constants.KEY_RECEIVER_NAME);
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
                     chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
                     chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);

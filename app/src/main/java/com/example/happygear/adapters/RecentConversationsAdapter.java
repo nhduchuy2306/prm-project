@@ -43,7 +43,7 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
         if(chatMessage == null){
             return;
         }
-        holder.tvUserName.setText(chatMessage.getSenderId());
+        holder.tvUserName.setText(chatMessage.getConversionName());
         holder.tvRecentMessage.setText(chatMessage.getMessage());
         holder.itemRecentConversation.setOnClickListener(v -> mConversionListener.onConversionClick(new User(), chatMessage));
     }

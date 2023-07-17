@@ -110,11 +110,11 @@ public class ChatManagementActivity extends AppCompatActivity implements Convers
                     chatMessage.receiverId = receiverId;
                     if (user.getUsername().equals(senderId)) {
                         chatMessage.conversionId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
-                        chatMessage.conversionName = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
+                        chatMessage.conversionName = documentChange.getDocument().getString(Constants.KEY_RECEIVER_NAME);
                         chatMessage.conversionId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                     } else {
                         chatMessage.conversionId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
-                        chatMessage.conversionName = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
+                        chatMessage.conversionName = documentChange.getDocument().getString(Constants.KEY_SENDER_NAME);
                         chatMessage.conversionId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     }
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_LAST_MESSAGE);
@@ -131,12 +131,10 @@ public class ChatManagementActivity extends AppCompatActivity implements Convers
                             break;
                         }
                     }
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Collections.sort(conversations, Comparator.comparing(obj -> obj.dateObject));
-                    }
-
                 }
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Collections.sort(conversations, (obj1, obj2) -> obj2.dateObject.compareTo(obj1.dateObject) );
             }
             conversationsAdapter.notifyDataSetChanged();
             conversationsRecyclerView.smoothScrollToPosition(0);
