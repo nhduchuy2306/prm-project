@@ -116,13 +116,12 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
                     String receiverSerialized = sharedPreferences.getString("receiver", null);
                     if(receiverSerialized != null){
                         receiver = (User) SerializableObject.deserializeObject(receiverSerialized);
-                        textNameChat.setText(receiver.getUsername());
+                        textNameChat.setText(receiver.getFullName());
                     }
                 }
             }
             else if (account != null){
                 user.setUsername(account.getId());
-                user.setFullName(account.getDisplayName());
                 if (!user.getUsername().equals("admin")) {
                     receiver = new User();
                     receiver.setUsername("admin");
@@ -136,7 +135,7 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
                     String receiverSerialized = sharedPreferences.getString("receiver", null);
                     if(receiverSerialized != null){
                         receiver = (User) SerializableObject.deserializeObject(receiverSerialized);
-                        textNameChat.setText(receiver.getUsername());
+                        textNameChat.setText(receiver.getFullName());
                     }
                 }
             }
