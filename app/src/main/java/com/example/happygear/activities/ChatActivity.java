@@ -121,6 +121,7 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
                 }
             }
             else if (account != null){
+                user = new User();
                 user.setUsername(account.getId());
                 if (!user.getUsername().equals("admin")) {
                     receiver = new User();
