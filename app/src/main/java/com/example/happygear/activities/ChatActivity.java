@@ -27,6 +27,8 @@ import com.example.happygear.models.User;
 import com.example.happygear.services.UserService;
 import com.example.happygear.utils.Constants;
 import com.example.happygear.utils.SerializableObject;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -53,6 +55,8 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
     //    private ActivityChatBinding binding;
     private User user;
     private User receiver;
+
+    private GoogleSignInAccount account;
     private List<ChatMessage> mChatMessages;
     private ChatAdapter chatAdapter;
     private RecyclerView chatRecyclerView;
@@ -93,10 +97,32 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
             database = FirebaseFirestore.getInstance();
 
             //get sender
+            account = GoogleSignIn.getLastSignedInAccount(this);
+
             sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             String userSerialized = sharedPreferences.getString("user", null);
             if (userSerialized != null) {
                 user = (User) SerializableObject.deserializeObject(userSerialized);
+                if (!user.getUsername().equals("admin")) {
+                    receiver = new User();
+                    receiver.setUsername("admin");
+                    receiver.setFullName("Admin");
+                    receiver.setPassword("admin");
+                    receiver.setEmail("admin@gmail.com");
+                    receiver.setStatus(true);
+                    receiver.setRoleId(1);
+                }else{
+                    sharedPreferences = this.getSharedPreferences("Receiver", Context.MODE_PRIVATE);
+                    String receiverSerialized = sharedPreferences.getString("receiver", null);
+                    if(receiverSerialized != null){
+                        receiver = (User) SerializableObject.deserializeObject(receiverSerialized);
+                        textNameChat.setText(receiver.getUsername());
+                    }
+                }
+            }
+            else if (account != null){
+                user.setUsername(account.getId());
+                user.setFullName(account.getDisplayName());
                 if (!user.getUsername().equals("admin")) {
                     receiver = new User();
                     receiver.setUsername("admin");
@@ -130,23 +156,6 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-    private void loadAdmin() {
-        UserService.userService.getUserByUsername("admin").enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    receiver = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
-            }
-        });
     }
 
 
@@ -220,9 +229,11 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
         }
     });
 
+
     private String getReadableDateTime(Date date) {
         return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
     }
+
 
     private void addConversion(HashMap<String, Object> conversion){
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
@@ -230,17 +241,21 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
                 .addOnSuccessListener(documentReference -> conversionId = documentReference.getId());
     }
 
+
     private void updateConversion(String message){
         DocumentReference documentReference = database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .document(conversionId);
         documentReference.update(Constants.KEY_LAST_MESSAGE, message, Constants.KEY_TIMESTAMP, new Date());
     }
+
+
     private void checkForConversion(){
         if(mChatMessages.size() != 0){
             checkForConversionRemotely( user.getUsername(), receiver.getUsername() );
             checkForConversionRemotely(receiver.getUsername(), user.getUsername());
         }
     }
+
 
     private void checkForConversionRemotely(String senderId, String receiverId){
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
