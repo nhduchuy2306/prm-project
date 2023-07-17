@@ -123,6 +123,8 @@ public class ChatActivity extends AppCompatActivity implements ChatListener {
             else if (account != null){
                 user = new User();
                 user.setUsername(account.getId());
+                user.setFullName(account.getDisplayName());
+                user.setEmail(account.getEmail());
                 if (!user.getUsername().equals("admin")) {
                     receiver = new User();
                     receiver.setUsername("admin");
