@@ -63,7 +63,7 @@ public class CheckoutActivity extends AppCompatActivity {
     // MoMo
     private String amount = "10000";
     private String merchantName = "Happy Gear";
-    private String merchantCode = "MOMOI3J920220921";
+    private String merchantCode = "";
     private String description = "Thanh toán dịch vụ Happy Gear";
 
     @Override
